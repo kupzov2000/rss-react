@@ -1,4 +1,4 @@
-import type { ApiResponse, Character } from './types';
+import type { ApiResponse, Character } from '../model/types';
 
 export async function getCharacters(
   name: string = '',

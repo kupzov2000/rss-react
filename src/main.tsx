@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import SearchBar from './features/search/ui/SearchBar';
+import { SearchPage } from './pages/search-page';
 
 const root = document.querySelector('#root');
 
@@ -11,6 +11,6 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <SearchBar />
+    <SearchPage />
   </StrictMode>
 );
