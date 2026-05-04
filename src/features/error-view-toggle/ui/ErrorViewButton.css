@@ -1,0 +1,22 @@
+.error__button {
+  position: fixed;
+  height: 40px;
+  bottom: 50px;
+  right: 50px;
+  padding: 10px 20px;
+  border: 0px;
+  border-radius: 6px;
+  background: #82181a;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.error__button:hover {
+  background: #d44648;
+}
+
+.error__button:active {
+  background: #82181a;
+  border-color: #82181a;
+}
