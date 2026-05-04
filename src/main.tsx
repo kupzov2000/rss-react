@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { SearchPage } from './pages/search-page';
+import { ErrorBoundary } from './app/providers/error-boundary';
 
 const root = document.querySelector('#root');
 
@@ -11,6 +12,8 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <SearchPage />
+    <ErrorBoundary>
+      <SearchPage />
+    </ErrorBoundary>
   </StrictMode>
 );

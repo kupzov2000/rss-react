@@ -1,14 +1,19 @@
 import type { Character } from '@/entities/character';
-import { ResultList } from '@/entities/character/ui';
-import { searchCharacterModel } from '@/features/search-character';
-import { SearchBar } from '@/features/search-character/ui';
-import { LoadingSpinner } from '@/shared/ui/spinner';
+import {
+  mapResultToState,
+  searchCharacterModel,
+} from '@/features/search-character';
+import { SearchBar, SearchContent } from '@/features/search-character/ui';
 import { Component, type ChangeEvent } from 'react';
+import './SearchCharacterWidget.css';
+import { ErrorViewButton } from '@/features/error-view-toggle';
 
 interface State {
   items: Character[];
   value: string;
   loading: boolean;
+  error: string | null;
+  shouldCrash: boolean;
 }
 
 export default class SearchCharacterWidget extends Component {
@@ -16,6 +21,8 @@ export default class SearchCharacterWidget extends Component {
     items: [],
     value: searchCharacterModel.getSavedValue(),
     loading: false,
+    error: null,
+    shouldCrash: false,
   };
 
   async componentDidMount() {
@@ -27,14 +34,24 @@ export default class SearchCharacterWidget extends Component {
   };
 
   handleSearch = async () => {
-    this.setState({ loading: true });
+    const trimmed = this.state.value.trim();
 
-    const items = await searchCharacterModel.search(this.state.value);
+    this.setState({ value: trimmed, loading: true, error: null });
 
-    this.setState({ items, loading: false });
+    const result = await searchCharacterModel.search(trimmed);
+
+    this.setState(mapResultToState(result));
+  };
+
+  handleErrorView = () => {
+    this.setState({ shouldCrash: true });
   };
 
   render() {
+    if (this.state.shouldCrash) {
+      throw new Error('Test error from Error Button');
+    }
+
     return (
       <>
         <header className="header">
@@ -42,14 +59,16 @@ export default class SearchCharacterWidget extends Component {
             value={this.state.value}
             onChange={this.handleChange}
             onClick={this.handleSearch}
+            placeholder="Search by name..."
           />
         </header>
         <main className="main">
-          {this.state.loading ? (
-            <LoadingSpinner />
-          ) : (
-            <ResultList viewModelCards={this.state.items} />
-          )}
+          <SearchContent
+            loading={this.state.loading}
+            error={this.state.error}
+            items={this.state.items}
+          />
+          <ErrorViewButton onClick={this.handleErrorView} />
         </main>
       </>
     );

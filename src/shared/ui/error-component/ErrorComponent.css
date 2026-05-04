@@ -1,0 +1,27 @@
+.error__wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.error__refresh {
+  padding: 10px 20px;
+  border: 0px;
+  border-radius: 6px;
+  background: #82181a;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.error__refresh:hover {
+  background: #d44648;
+}
+
+.error__refresh:active {
+  background: #82181a;
+  border-color: #82181a;
+}

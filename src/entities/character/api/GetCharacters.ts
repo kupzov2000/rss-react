@@ -1,11 +1,17 @@
 import type { ApiResponse, Character } from '../model/types';
 
+const ERROR_NOT_FOUND = 404;
+
 export async function getCharacters(
   name: string = '',
   page = 1
 ): Promise<Character[]> {
   const url = `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}`;
   const response = await fetch(url);
+
+  if (response.status === ERROR_NOT_FOUND) {
+    return [];
+  }
 
   if (!response.ok) {
     throw new Error(`API error: ${response.status}`);
