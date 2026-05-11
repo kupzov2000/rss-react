@@ -3,6 +3,6 @@ import './LoadingSpinner.css';
 
 export default class LoadingSpinner extends Component {
   render() {
-    return <div className="spinner" />;
+    return <div className="spinner" role="status" aria-label="loading" />;
   }
 }
