@@ -90,4 +90,11 @@ export default defineConfig([
       },
     },
   },
+  {
+    files: ['**/*.test.{ts,tsx}'],
+
+    rules: {
+      'max-lines-per-function': 'off',
+    },
+  },
 ]);
