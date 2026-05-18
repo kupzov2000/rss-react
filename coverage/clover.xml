@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1779114660189" clover="3.2.0">
-  <project timestamp="1779114660189" name="All files">
-    <metrics statements="88" coveredstatements="76" conditionals="38" coveredconditionals="33" methods="28" coveredmethods="24" elements="154" coveredelements="133" complexity="0" loc="88" ncloc="88" packages="21" files="36" classes="36"/>
+<coverage generated="1779146940653" clover="3.2.0">
+  <project timestamp="1779146940653" name="All files">
+    <metrics statements="103" coveredstatements="89" conditionals="49" coveredconditionals="41" methods="36" coveredmethods="29" elements="188" coveredelements="159" complexity="0" loc="103" ncloc="103" packages="28" files="41" classes="41"/>
     <package name="src">
       <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="main.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\main.tsx">
@@ -13,12 +13,8 @@
       </file>
     </package>
     <package name="src.__test__">
-      <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="1"/>
+      <metrics statements="1" coveredstatements="1" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
       <file name="MockCharacter.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\__test__\MockCharacter.tsx">
-        <metrics statements="1" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="3" count="0" type="cond" truecount="0" falsecount="1"/>
-      </file>
-      <file name="mockCharacter.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\__test__\mockCharacter.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="3" count="2" type="cond" truecount="1" falsecount="0"/>
       </file>
@@ -36,6 +32,13 @@
       </file>
       <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\app\providers\error-boundary\index.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.app.routes">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="route.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\app\routes\route.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.entities.character">
@@ -83,7 +86,7 @@
       </file>
       <file name="ResultList.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\entities\character\ui\ResultList.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="10" count="10" type="stmt"/>
+        <line num="10" count="9" type="stmt"/>
         <line num="13" count="3" type="stmt"/>
       </file>
       <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\entities\character\ui\index.ts">
@@ -100,7 +103,7 @@
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="ErrorViewButton.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\features\error-view-toggle\ui\ErrorViewButton.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="8" count="27" type="stmt"/>
+        <line num="8" count="25" type="stmt"/>
       </file>
     </package>
     <package name="src.features.search-character">
@@ -114,36 +117,39 @@
       <file name="MapResultToState.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\features\search-character\lib\MapResultToState.ts">
         <metrics statements="9" coveredstatements="8" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1"/>
         <line num="3" count="4" type="stmt"/>
-        <line num="9" count="10" type="stmt"/>
-        <line num="13" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="14" count="6" type="stmt"/>
-        <line num="21" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="29" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
+        <line num="9" count="9" type="stmt"/>
+        <line num="13" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="22" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.features.search-character.model">
-      <metrics statements="16" coveredstatements="15" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+      <metrics statements="19" coveredstatements="18" conditionals="10" coveredconditionals="10" methods="2" coveredmethods="2"/>
       <file name="SearchCharacter.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\features\search-character\model\SearchCharacter.ts">
-        <metrics statements="16" coveredstatements="15" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+        <metrics statements="19" coveredstatements="18" conditionals="10" coveredconditionals="10" methods="2" coveredmethods="2"/>
         <line num="4" count="4" type="stmt"/>
         <line num="6" count="4" type="stmt"/>
         <line num="7" count="4" type="stmt"/>
-        <line num="9" count="4" type="stmt"/>
-        <line num="11" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="15" count="6" type="cond" truecount="4" falsecount="0"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="19" count="5" type="stmt"/>
-        <line num="21" count="5" type="stmt"/>
-        <line num="23" count="5" type="stmt"/>
-        <line num="24" count="5" type="stmt"/>
-        <line num="26" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="27" count="4" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="5" type="cond" truecount="5" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="28" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
       </file>
       <file name="types.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\features\search-character\model\types.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -153,23 +159,36 @@
       <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
       <file name="SearchBar.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\features\search-character\ui\SearchBar.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="16" count="30" type="stmt"/>
+        <line num="16" count="28" type="stmt"/>
       </file>
       <file name="SearchContent.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\features\search-character\ui\SearchContent.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
-        <line num="12" count="27" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="9" type="stmt"/>
+        <line num="12" count="25" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="7" type="stmt"/>
         <line num="16" count="18" type="cond" truecount="2" falsecount="0"/>
-        <line num="17" count="9" type="stmt"/>
-        <line num="20" count="9" type="stmt"/>
+        <line num="17" count="10" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
       </file>
       <file name="index.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\features\search-character\ui\index.tsx">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
+    <package name="src.pages.about-page">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\pages\about-page\index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.pages.about-page.ui">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="AboutPage.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\pages\about-page\ui\AboutPage.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="4" count="0" type="stmt"/>
+      </file>
+    </package>
     <package name="src.pages.search-page">
       <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="index.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\pages\search-page\index.tsx">
+      <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\pages\search-page\index.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
@@ -195,10 +214,36 @@
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="LoadingSpinner.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\shared\ui\spinner\LoadingSpinner.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="4" count="10" type="stmt"/>
+        <line num="4" count="8" type="stmt"/>
       </file>
       <file name="index.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\shared\ui\spinner\index.tsx">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.widgets.about">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\about\index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.widgets.about.ui">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="AboutWidget.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\about\ui\AboutWidget.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.widgets.menu">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\menu\index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.widgets.menu.ui">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="Menu.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\menu\ui\Menu.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.widgets.search-character">
@@ -208,57 +253,63 @@
       </file>
     </package>
     <package name="src.widgets.search-character.model">
-      <metrics statements="16" coveredstatements="14" conditionals="6" coveredconditionals="5" methods="3" coveredmethods="3"/>
-      <file name="InitSearch.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\model\InitSearch.ts">
-        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="8" count="8" type="stmt"/>
-        <line num="10" count="8" type="stmt"/>
-        <line num="12" count="8" type="stmt"/>
-        <line num="14" count="6" type="stmt"/>
-      </file>
+      <metrics statements="10" coveredstatements="9" conditionals="12" coveredconditionals="9" methods="2" coveredmethods="2"/>
       <file name="InitialState.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\model\InitialState.ts">
-        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="4" count="0" type="stmt"/>
-      </file>
-      <file name="initialState.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\model\initialState.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="2" type="stmt"/>
       </file>
       <file name="reducer.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\model\reducer.ts">
-        <metrics statements="7" coveredstatements="6" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1"/>
-        <line num="4" count="21" type="cond" truecount="5" falsecount="1"/>
+        <metrics statements="6" coveredstatements="5" conditionals="11" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <line num="4" count="19" type="cond" truecount="4" falsecount="1"/>
         <line num="6" count="5" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
         <line num="22" count="5" type="stmt"/>
-        <line num="29" count="8" type="stmt"/>
-        <line num="38" count="2" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
       </file>
       <file name="search.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\model\search.ts">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
+        <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="9" count="8" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
       </file>
       <file name="types.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\model\types.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
     <package name="src.widgets.search-character.ui">
-      <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
-      <file name="SearchCharacterWidget.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\ui\SearchCharacterWidget.tsx">
-        <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
-        <line num="11" count="30" type="stmt"/>
-        <line num="13" count="30" type="stmt"/>
-        <line num="14" count="8" type="stmt"/>
-        <line num="18" count="5" type="stmt"/>
+      <metrics statements="26" coveredstatements="26" conditionals="6" coveredconditionals="4" methods="11" coveredmethods="11"/>
+      <file name="PaginationMenu.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\ui\PaginationMenu.tsx">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <line num="9" count="32" type="stmt"/>
+        <line num="11" count="32" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="32" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="17" count="32" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="32" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="33" count="30" type="cond" truecount="2" falsecount="0"/>
-        <line num="34" count="2" type="stmt"/>
-        <line num="37" count="27" type="stmt"/>
+        <line num="25" count="32" type="stmt"/>
+      </file>
+      <file name="SearchCharacterWidget.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\hooks-and-routing\rss-react\src\widgets\search-character\ui\SearchCharacterWidget.tsx">
+        <metrics statements="17" coveredstatements="17" conditionals="4" coveredconditionals="3" methods="7" coveredmethods="7"/>
+        <line num="12" count="28" type="stmt"/>
+        <line num="14" count="28" type="stmt"/>
+        <line num="16" count="28" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="28" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="33" count="7" type="stmt"/>
+        <line num="37" count="5" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="52" count="28" type="cond" truecount="2" falsecount="0"/>
+        <line num="53" count="2" type="stmt"/>
+        <line num="56" count="25" type="stmt"/>
       </file>
     </package>
   </project>

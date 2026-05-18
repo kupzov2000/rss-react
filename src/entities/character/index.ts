@@ -1,3 +1,3 @@
 export { getCharacters } from './api/GetCharacters';
 
-export type { ApiResponse, Character } from './model/types';
+export type { ApiResponse, Character, SearchData } from './model/types';

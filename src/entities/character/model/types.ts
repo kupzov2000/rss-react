@@ -13,6 +13,20 @@ export interface Character {
   url: string;
 }
 
+export interface SearchData {
+  items: Character[];
+  pages: number;
+}
+
+export interface Info {
+  count: number;
+  next: string;
+  pages: number;
+  prev: null;
+}
+
 export interface ApiResponse {
+  info: Info;
   results: Character[];
 }
+

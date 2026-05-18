@@ -1,17 +1,23 @@
 import type { Character } from '@/entities/character';
-import type { mapResultToState } from '@/features/search-character';
+
+export interface SearchResult {
+  error: string | null;
+  items: Character[];
+  loading: boolean;
+  pages: number;
+}
 
 export type Action =
   | { type: 'SET_VALUE'; payload: string }
   | { type: 'SEARCH_START'; payload: string }
-  | { type: 'SEARCH_RESULT'; payload: ReturnType<typeof mapResultToState> }
-  | { type: 'SEARCH_INIT'; payload: string }
+  | { type: 'SEARCH_RESULT'; payload: SearchResult }
   | { type: 'CRASH' };
 
 export interface State {
-  items: Character[];
-  value: string;
-  loading: boolean;
   error: string | null;
+  items: Character[];
+  loading: boolean;
+  pages: number;
   shouldCrash: boolean;
+  value: string;
 }

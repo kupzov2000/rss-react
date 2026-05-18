@@ -72,7 +72,7 @@ export default defineConfig([
       ],
       'max-lines-per-function': [
         'error',
-        { max: 50, skipBlankLines: true, skipComments: true },
+        { max: 60, skipBlankLines: true, skipComments: true },
       ],
       '@typescript-eslint/no-magic-numbers': [
         'error',

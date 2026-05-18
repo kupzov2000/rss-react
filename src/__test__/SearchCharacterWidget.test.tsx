@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { SearchCharacterWidget } from '@/widgets/search-character';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+
 import { ErrorBoundary } from '@/app/providers/error-boundary';
+import { SearchCharacterWidget } from '@/widgets/search-character';
 
 const mockSearch = vi.hoisted(() => vi.fn());
 
@@ -11,10 +13,8 @@ vi.mock('@/features/search-character', async () => {
 
   return {
     ...actual,
-
     searchCharacterModel: {
       getSavedValue: vi.fn(() => 'Rick'),
-
       search: mockSearch,
     },
   };
@@ -28,30 +28,34 @@ describe('SearchCharacterWidget', () => {
   it('renders characters after successful search', async () => {
     mockSearch.mockResolvedValue({
       type: 'SUCCESS',
-
-      data: [
-        {
-          id: 1,
-          name: 'Rick Sanchez',
-          image: 'rick.png',
-          created: '',
-          episode: [],
-          gender: '',
-          location: { name: '', url: '' },
-          origin: { name: '', url: '' },
-          species: '',
-          status: '',
-          type: '',
-          url: '',
-        },
-      ],
+      data: {
+        items: [
+          {
+            id: 1,
+            name: 'Rick Sanchez',
+            image: 'rick.png',
+            created: '',
+            episode: [],
+            gender: '',
+            location: { name: '', url: '' },
+            origin: { name: '', url: '' },
+            species: '',
+            status: '',
+            type: '',
+            url: '',
+          },
+        ],
+        pages: 1,
+      },
     });
 
-    render(<SearchCharacterWidget />);
+    render(
+      <MemoryRouter initialEntries={['/?page=1']}>
+        <SearchCharacterWidget />
+      </MemoryRouter>
+    );
 
-    const character = await screen.findByText(/Rick Sanchez/i);
-
-    expect(character).toBeInTheDocument();
+    expect(await screen.findByText(/Rick Sanchez/i)).toBeInTheDocument();
   });
 
   it('shows error when search returns NOT_FOUND', async () => {
@@ -59,34 +63,43 @@ describe('SearchCharacterWidget', () => {
       type: 'NOT_FOUND',
     });
 
-    render(<SearchCharacterWidget />);
-
-    const errorMessage = await screen.findByText(
-      /character with this name not found/i
+    render(
+      <MemoryRouter initialEntries={['/?page=1']}>
+        <SearchCharacterWidget />
+      </MemoryRouter>
     );
 
-    expect(errorMessage).toBeInTheDocument();
+    expect(
+      await screen.findByText(/character with this name not found/i)
+    ).toBeInTheDocument();
   });
 
-  it('shows error when api request rejects', async () => {
+  it('shows error when api request fails', async () => {
     mockSearch.mockResolvedValue({
       type: 'SERVER_ERROR',
     });
-    render(<SearchCharacterWidget />);
 
-    const errorMessage = await screen.findByText(/something went wrong/i);
+    render(
+      <MemoryRouter initialEntries={['/?page=1']}>
+        <SearchCharacterWidget />
+      </MemoryRouter>
+    );
 
-    expect(errorMessage).toBeInTheDocument();
+    expect(
+      await screen.findByText(/something went wrong/i)
+    ).toBeInTheDocument();
   });
 
-  it('snows loading spinner while searching', async () => {
+  it('shows loading spinner while searching', async () => {
     mockSearch.mockImplementation(() => new Promise(() => {}));
 
-    render(<SearchCharacterWidget />);
+    render(
+      <MemoryRouter initialEntries={['/?page=1']}>
+        <SearchCharacterWidget />
+      </MemoryRouter>
+    );
 
-    const loader = await screen.findByRole('status');
-
-    expect(loader).toBeInTheDocument();
+    expect(await screen.findByRole('status')).toBeInTheDocument();
   });
 });
 
@@ -100,7 +113,9 @@ describe('SearchCharacterWidget crash state', () => {
 
     render(
       <ErrorBoundary>
-        <SearchCharacterWidget />
+        <MemoryRouter initialEntries={['/?page=1']}>
+          <SearchCharacterWidget />
+        </MemoryRouter>
       </ErrorBoundary>
     );
 

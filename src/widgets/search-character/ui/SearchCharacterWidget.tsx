@@ -1,29 +1,48 @@
 import { SearchBar, SearchContent } from '@/features/search-character/ui';
 import { useEffect, useReducer, type ChangeEvent } from 'react';
 import './SearchCharacterWidget.css';
-import { ErrorViewButton } from '@/features/error-view-toggle';
 import { reducer } from '../model/reducer';
-import { initSearch } from '../model/InitSearch';
 import { searchCharacters } from '../model/search';
 import { initialState } from '../model/InitialState';
+import { ErrorViewButton } from '@/features/error-view-toggle';
+import { PaginationMenu } from './PaginationMenu';
+import { useSearchParams } from 'react-router-dom';
 
 export default function SearchCharacterWidget() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const [searchParameters, setSearchParameters] = useSearchParams();
+
+  const page = Number(searchParameters.get('page')) || 1;
+
   useEffect(() => {
-    initSearch(dispatch);
-  }, []);
+    const load = async () => {
+      dispatch({
+        type: 'SEARCH_START',
+        payload: state.value.trim(),
+      });
+
+      const data = await searchCharacters(state.value, page);
+
+      dispatch({
+        type: 'SEARCH_RESULT',
+        payload: data,
+      });
+    };
+
+    load();
+  }, [page]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch({ type: 'SET_VALUE', payload: event.currentTarget.value });
   }
 
-  async function handleSearch() {
-    dispatch({ type: 'SEARCH_START', payload: state.value.trim() });
+  function handleSearch() {
+    setSearchParameters({ page: '1' });
 
-    const data = await searchCharacters(state.value);
-
-    dispatch({ type: 'SEARCH_RESULT', payload: data });
+    searchCharacters(state.value, 1).then((data) => {
+      dispatch({ type: 'SEARCH_RESULT', payload: data });
+    });
   }
 
   function handleErrorView() {
@@ -45,6 +64,7 @@ export default function SearchCharacterWidget() {
         />
       </header>
       <main className="main">
+        <PaginationMenu pages={state.pages} />
         <SearchContent
           loading={state.loading}
           error={state.error}

@@ -21,16 +21,10 @@ export function reducer(state: State, action: Action): State {
     case 'SEARCH_RESULT': {
       return {
         ...state,
-        ...action.payload,
-      };
-    }
-
-    case 'SEARCH_INIT': {
-      return {
-        ...state,
-        value: action.payload,
-        loading: true,
-        error: null,
+        items: action.payload.items ?? [],
+        pages: action.payload.pages ?? 0,
+        error: action.payload.error ?? null,
+        loading: false,
       };
     }
 

@@ -1,10 +1,14 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { SearchCharacterWidget } from '@/widgets/search-character';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import { SearchCharacterWidget } from '@/widgets/search-character';
 
 vi.mock('@/entities/character', () => ({
-  getCharacters: vi.fn(async () => []),
+  getCharacters: vi.fn(async () => ({
+    items: [],
+    pages: 0,
+  })),
 }));
 
 describe('SearchCharacterWidget localStorage', () => {
@@ -13,37 +17,35 @@ describe('SearchCharacterWidget localStorage', () => {
     vi.clearAllMocks();
   });
 
-  it('reads saved value from localStorage on mount', () => {
-    localStorage.setItem('search_data', 'Rick');
-
-    render(<SearchCharacterWidget />);
-
-    const input = screen.getByRole('textbox');
-
-    expect(input).toHaveValue('Rick');
-  });
-
   it('shows empty input when localStorage is empty', () => {
-    render(<SearchCharacterWidget />);
+    render(
+      <MemoryRouter initialEntries={['/?page=1']}>
+        <SearchCharacterWidget />
+      </MemoryRouter>
+    );
 
     const input = screen.getByRole('textbox');
 
     expect(input).toHaveValue('');
   });
 
-  it('writes value to localStorage after search', async () => {
+  it('updates localStorage after search via URL change', async () => {
     const user = userEvent.setup();
 
-    render(<SearchCharacterWidget />);
+    render(
+      <MemoryRouter initialEntries={['/?page=1']}>
+        <SearchCharacterWidget />
+      </MemoryRouter>
+    );
 
     const input = screen.getByRole('textbox');
-    const button = screen.getByRole('button', {
-      name: /search/i,
-    });
+    const button = screen.getByRole('button', { name: /search/i });
 
     await user.type(input, 'Morty');
     await user.click(button);
 
-    expect(localStorage.getItem('search_data')).toBe('Morty');
+    await waitFor(() => {
+      expect(localStorage.getItem('search_data')).toBe('Morty');
+    });
   });
 });

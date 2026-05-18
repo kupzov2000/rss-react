@@ -1,0 +1,29 @@
+.pagination__button {
+  padding: 8px 28px;
+  margin: 20px;
+  text-decoration: none;
+  font-size: 18px;
+  border: 0;
+  border-radius: 6px;
+  background: #4a90e2;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination__button:disabled {
+  background: #103b6d;
+  cursor: default;
+}
+
+.pagination__button:not(:disabled):hover {
+  background: #3a7bc8;
+}
+
+.pagination__button:not(:disabled):active {
+  background: #2f66a8;
+}
+
+.pagination__current-page {
+  font-size: 20px;
+  color: #fff;
+}

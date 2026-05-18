@@ -1,16 +1,16 @@
-import type { ApiResponse, Character } from '../model/types';
+import type { ApiResponse, SearchData } from '../model/types';
 
 const ERROR_NOT_FOUND = 404;
 
 export async function getCharacters(
   name: string = '',
   page = 1
-): Promise<Character[]> {
+): Promise<SearchData> {
   const url = `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}`;
   const response = await fetch(url);
 
   if (response.status === ERROR_NOT_FOUND) {
-    return [];
+    return { items: [], pages: 0 };
   }
 
   if (!response.ok) {
@@ -19,5 +19,5 @@ export async function getCharacters(
 
   const data: ApiResponse = await response.json();
 
-  return data.results;
+  return { items: data.results, pages: data.info.pages };
 }
