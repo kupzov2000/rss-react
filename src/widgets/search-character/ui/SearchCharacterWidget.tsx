@@ -3,9 +3,9 @@ import { useEffect, useReducer, type ChangeEvent } from 'react';
 import './SearchCharacterWidget.css';
 import { ErrorViewButton } from '@/features/error-view-toggle';
 import { reducer } from '../model/reducer';
-import { initialState } from '../model/initialState';
 import { initSearch } from '../model/InitSearch';
 import { searchCharacters } from '../model/search';
+import { initialState } from '../model/InitialState';
 
 export default function SearchCharacterWidget() {
   const [state, dispatch] = useReducer(reducer, initialState);

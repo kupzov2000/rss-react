@@ -1,0 +1,25 @@
+.about__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  color: #fff;
+  font-size: 18px;
+  padding: 1.5rem;
+}
+
+.about__window {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 6px;
+  background-color: rgba(82, 82, 170, 0.329);
+  max-width: 400px;
+}
+
+.about__link-school {
+  color: rgba(138, 155, 230, 0.575);
+  text-decoration: none;
+}

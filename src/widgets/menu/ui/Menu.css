@@ -1,0 +1,26 @@
+.nav-menu {
+  display: flex;
+}
+
+.nav-menu__button {
+  padding: 8px 28px;
+  margin: 20px;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 6px;
+  background: #4a90e2;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav-menu__button.active {
+  background: #103b6d;
+}
+
+.nav-menu__button:not(.active):hover {
+  background: #3a7bc8;
+}
+
+.nav-menu__button:not(.active):active {
+  background: #2f66a8;
+}
