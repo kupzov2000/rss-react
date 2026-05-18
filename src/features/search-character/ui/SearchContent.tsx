@@ -1,7 +1,6 @@
 import type { Character } from '@/entities/character';
 import { ResultList } from '@/entities/character/ui';
 import { LoadingSpinner } from '@/shared/ui/spinner';
-import { Component } from 'react';
 
 interface Props {
   loading: boolean;
@@ -9,16 +8,14 @@ interface Props {
   items: Character[];
 }
 
-export default class SearchContent extends Component<Props> {
-  render() {
-    if (this.props.loading) {
-      return <LoadingSpinner />;
-    }
-
-    if (this.props.error) {
-      return <p className="error-container">{this.props.error}</p>;
-    }
-
-    return <ResultList viewModelCards={this.props.items} />;
+export default function SearchContent({ loading, error, items }: Props) {
+  if (loading) {
+    return <LoadingSpinner />;
   }
+
+  if (error != null) {
+    return <p className="error-container">{error}</p>;
+  }
+
+  return <ResultList viewModelCards={items} />;
 }

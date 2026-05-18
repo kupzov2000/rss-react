@@ -1,76 +1,57 @@
-import type { Character } from '@/entities/character';
-import {
-  mapResultToState,
-  searchCharacterModel,
-} from '@/features/search-character';
 import { SearchBar, SearchContent } from '@/features/search-character/ui';
-import { Component, type ChangeEvent } from 'react';
+import { useEffect, useReducer, type ChangeEvent } from 'react';
 import './SearchCharacterWidget.css';
 import { ErrorViewButton } from '@/features/error-view-toggle';
+import { reducer } from '../model/reducer';
+import { initialState } from '../model/initialState';
+import { initSearch } from '../model/InitSearch';
+import { searchCharacters } from '../model/search';
 
-interface State {
-  items: Character[];
-  value: string;
-  loading: boolean;
-  error: string | null;
-  shouldCrash: boolean;
-}
+export default function SearchCharacterWidget() {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-export default class SearchCharacterWidget extends Component {
-  state: State = {
-    items: [],
-    value: searchCharacterModel.getSavedValue(),
-    loading: false,
-    error: null,
-    shouldCrash: false,
-  };
+  useEffect(() => {
+    initSearch(dispatch);
+  }, []);
 
-  async componentDidMount() {
-    this.handleSearch();
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: 'SET_VALUE', payload: event.currentTarget.value });
   }
 
-  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: event.currentTarget.value });
-  };
+  async function handleSearch() {
+    dispatch({ type: 'SEARCH_START', payload: state.value.trim() });
 
-  handleSearch = async () => {
-    const trimmed = this.state.value.trim();
+    const data = await searchCharacters(state.value);
 
-    this.setState({ value: trimmed, loading: true, error: null });
-
-    const result = await searchCharacterModel.search(trimmed);
-
-    this.setState(mapResultToState(result));
-  };
-
-  handleErrorView = () => {
-    this.setState({ shouldCrash: true });
-  };
-
-  render() {
-    if (this.state.shouldCrash) {
-      throw new Error('Test error from Error Button');
-    }
-
-    return (
-      <>
-        <header className="header">
-          <SearchBar
-            value={this.state.value}
-            onChange={this.handleChange}
-            onClick={this.handleSearch}
-            placeholder="Search by name..."
-          />
-        </header>
-        <main className="main">
-          <SearchContent
-            loading={this.state.loading}
-            error={this.state.error}
-            items={this.state.items}
-          />
-          <ErrorViewButton onClick={this.handleErrorView} />
-        </main>
-      </>
-    );
+    dispatch({ type: 'SEARCH_RESULT', payload: data });
   }
+
+  function handleErrorView() {
+    dispatch({ type: 'CRASH' });
+  }
+
+  if (state.shouldCrash) {
+    throw new Error('Test error from Error Button');
+  }
+
+  return (
+    <>
+      <header className="header">
+        <SearchBar
+          value={state.value}
+          onChange={handleChange}
+          onClick={handleSearch}
+          placeholder="Search by name..."
+        />
+      </header>
+      <main className="main">
+        <SearchContent
+          loading={state.loading}
+          error={state.error}
+          items={state.items}
+        />
+        <ErrorViewButton onClick={handleErrorView} />
+      </main>
+    </>
+  );
 }

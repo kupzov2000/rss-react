@@ -1,27 +1,29 @@
-import { Component, type ChangeEvent } from 'react';
 import './SearchBar.css';
 
 interface Props {
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => Promise<void>;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   placeholder: string;
 }
 
-export default class SearchBar extends Component<Props> {
-  render() {
-    return (
-      <div className="search">
-        <input
-          className="search__input"
-          value={this.props.value}
-          onChange={this.props.onChange}
-          placeholder={this.props.placeholder}
-        />
-        <button className="search__button" onClick={this.props.onClick}>
-          Search
-        </button>
-      </div>
-    );
-  }
+export default function SearchBar({
+  value,
+  onChange,
+  onClick,
+  placeholder,
+}: Props) {
+  return (
+    <div className="search">
+      <input
+        className="search__input"
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
+      <button className="search__button" onClick={onClick}>
+        Search
+      </button>
+    </div>
+  );
 }
