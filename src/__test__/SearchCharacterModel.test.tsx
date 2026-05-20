@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { searchCharacterModel } from '@/features/search-character';
 import { getCharacters } from '@/entities/character';
 import mockCharacter from './MockCharacter';
-// import mockCharacter from './mockCharacter';
 
 vi.mock('@/entities/character', () => ({
   getCharacters: vi.fn(),

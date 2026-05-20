@@ -1,8 +1,9 @@
 import { ResultList } from '@/entities/character/ui';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 
-describe('testing result list', () => {
+describe('ResultList', () => {
   it('renders all cards from props', () => {
     const mockData = [
       {
@@ -21,14 +22,16 @@ describe('testing result list', () => {
       },
     ];
 
-    render(<ResultList viewModelCards={mockData} />);
+    render(
+      <MemoryRouter>
+        <ResultList viewModelCards={mockData} />
+      </MemoryRouter>
+    );
 
     const items = screen.getAllByRole('listitem');
-
     expect(items).toHaveLength(mockData.length);
 
-    expect(
-      screen.getByText(/full name: Abradolf Lincler/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Morty Smith/i)).toBeInTheDocument();
+    expect(screen.getByText(/Abradolf Lincler/i)).toBeInTheDocument();
   });
 });

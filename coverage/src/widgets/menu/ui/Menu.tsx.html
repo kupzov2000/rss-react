@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -81,11 +81,41 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -101,18 +131,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { NavLink, Outlet } from 'react-router-dom';
 import './Menu.css';
+import { ErrorViewButton } from '@/features/error-view-toggle';
+import { useState } from 'react';
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >Menu() {</span>
-<span class="cstat-no" title="statement not covered" >  return (</span>
+export function Menu() {
+  const [shouldCrash, setShouldCrash] = useState(false);
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (shouldCrash) {
+<span class="cstat-no" title="statement not covered" >    throw new Error('Test error from Error Button');</span>
+  }
+&nbsp;
+  function <span class="fstat-no" title="function not covered" >handleErrorView() {</span>
+<span class="cstat-no" title="statement not covered" >    setShouldCrash(true);</span>
+  }
+&nbsp;
+  return (
     &lt;div&gt;
-      &lt;nav className="nav-menu"&gt;
-        &lt;NavLink to="/" className="nav-menu__button"&gt;
-          Home
-        &lt;/NavLink&gt;
-        &lt;NavLink to="about" className="nav-menu__button"&gt;
-          About
-        &lt;/NavLink&gt;
-      &lt;/nav&gt;
+      &lt;div className="button-actions"&gt;
+        &lt;nav className="nav-menu"&gt;
+          &lt;NavLink to="/" className="button"&gt;
+            Home
+          &lt;/NavLink&gt;
+          &lt;NavLink to="about" className="button"&gt;
+            About
+          &lt;/NavLink&gt;
+        &lt;/nav&gt;
+        &lt;ErrorViewButton onClick={handleErrorView} /&gt;
+      &lt;/div&gt;
       &lt;Outlet&gt;&lt;/Outlet&gt;
     &lt;/div&gt;
   );
@@ -124,7 +169,7 @@ export function <span class="fstat-no" title="function not covered" >Menu() {</s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-18T23:29:00.554Z
+                at 2026-05-20T21:14:07.743Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

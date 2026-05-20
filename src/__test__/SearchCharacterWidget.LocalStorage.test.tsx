@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { SearchCharacterWidget } from '@/widgets/search-character';
+import { SearchPage } from '@/pages/search-page';
 
 vi.mock('@/entities/character', () => ({
   getCharacters: vi.fn(async () => ({
@@ -11,7 +11,7 @@ vi.mock('@/entities/character', () => ({
   })),
 }));
 
-describe('SearchCharacterWidget localStorage', () => {
+describe('SearchPage localStorage', () => {
   beforeEach(() => {
     localStorage.clear();
     vi.clearAllMocks();
@@ -20,7 +20,7 @@ describe('SearchCharacterWidget localStorage', () => {
   it('shows empty input when localStorage is empty', () => {
     render(
       <MemoryRouter initialEntries={['/?page=1']}>
-        <SearchCharacterWidget />
+        <SearchPage />
       </MemoryRouter>
     );
 
@@ -34,7 +34,7 @@ describe('SearchCharacterWidget localStorage', () => {
 
     render(
       <MemoryRouter initialEntries={['/?page=1']}>
-        <SearchCharacterWidget />
+        <SearchPage />
       </MemoryRouter>
     );
 
