@@ -1,6 +1,7 @@
 import ResultItem from '@/entities/character/ui/ResultItem';
 import { render, screen } from '@testing-library/react';
-import { expect, describe, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('testing result item', () => {
   it('renders card information correctly', () => {
@@ -12,17 +13,16 @@ describe('testing result item', () => {
       status: 'Alive',
     };
 
-    render(<ResultItem card={mockData} />);
+    render(
+      <MemoryRouter>
+        <ResultItem card={mockData} page="1" />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText(/full name: rick sanchez/i)).toBeInTheDocument();
-
     expect(screen.getByText(/gender: male/i)).toBeInTheDocument();
-
     expect(screen.getByText(/status: alive/i)).toBeInTheDocument();
 
-    expect(screen.getByRole('img')).toHaveAttribute(
-      'src',
-      'https://rickandmortyapi.com/api/character/avatar/1.jpeg'
-    );
+    expect(screen.getByRole('img')).toHaveAttribute('src', mockData.image);
   });
 });

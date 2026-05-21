@@ -14,6 +14,9 @@ describe('getCharacters', () => {
             { id: 1, name: 'Rick' },
             { id: 2, name: 'Morty' },
           ],
+          info: {
+            pages: 3,
+          },
         },
         { status: 200 }
       )
@@ -21,20 +24,26 @@ describe('getCharacters', () => {
 
     const result = await getCharacters('Rick');
 
-    expect(result).toEqual([
-      { id: 1, name: 'Rick' },
-      { id: 2, name: 'Morty' },
-    ]);
+    expect(result).toEqual({
+      items: [
+        { id: 1, name: 'Rick' },
+        { id: 2, name: 'Morty' },
+      ],
+      pages: 3,
+    });
   });
 
-  it('returns empty array on 404', async () => {
+  it('returns empty result on 404', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(null, { status: 404 })
     );
 
     const result = await getCharacters('unknown');
 
-    expect(result).toEqual([]);
+    expect(result).toEqual({
+      items: [],
+      pages: 0,
+    });
   });
 
   it('throws error on API failure', async () => {

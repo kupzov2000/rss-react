@@ -14,6 +14,7 @@ export default function mapResultToState(result: SearchResult) {
     return {
       ...baseState,
       items: [],
+      pages: 0,
       error: ERRORS.NOT_FOUND,
     };
   }
@@ -22,6 +23,7 @@ export default function mapResultToState(result: SearchResult) {
     return {
       ...baseState,
       items: [],
+      pages: 0,
       error: ERRORS.SERVER_ERROR,
     };
   }
@@ -29,7 +31,8 @@ export default function mapResultToState(result: SearchResult) {
   if (result.type === 'SUCCESS') {
     return {
       ...baseState,
-      items: result.data,
+      items: result.data.items,
+      pages: result.data.pages,
       error: null,
     };
   }
@@ -37,6 +40,7 @@ export default function mapResultToState(result: SearchResult) {
   return {
     ...baseState,
     items: [],
+    pages: 0,
     error: ERRORS.SERVER_ERROR,
   };
 }

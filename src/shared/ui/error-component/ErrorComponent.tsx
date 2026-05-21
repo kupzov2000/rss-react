@@ -1,18 +1,15 @@
-import { Component } from 'react';
 import './ErrorComponent.css';
 
-export default class ErrorComponent extends Component {
-  render() {
-    return (
-      <div className="error__wrapper">
-        <h1>Something went wrong, the button below should help</h1>
-        <button
-          className="error__refresh"
-          onClick={() => globalThis.location.reload()}
-        >
-          Refresh
-        </button>
-      </div>
-    );
-  }
+export default function ErrorComponent() {
+  return (
+    <div className="error__wrapper">
+      <h1>Something went wrong, the button below should help</h1>
+      <button
+        className="error__refresh"
+        onClick={() => globalThis.location.reload()}
+      >
+        Refresh
+      </button>
+    </div>
+  );
 }
