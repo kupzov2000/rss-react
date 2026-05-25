@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
 import { SearchPage } from '@/pages/search-page';
+import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 
 vi.mock('@/entities/character', () => ({
   getCharacters: vi.fn(async () => ({
@@ -18,11 +18,7 @@ describe('SearchPage localStorage', () => {
   });
 
   it('shows empty input when localStorage is empty', () => {
-    render(
-      <MemoryRouter initialEntries={['/?page=1']}>
-        <SearchPage />
-      </MemoryRouter>
-    );
+    renderWidthRouter(<SearchPage />);
 
     const input = screen.getByRole('textbox');
 
@@ -32,11 +28,7 @@ describe('SearchPage localStorage', () => {
   it('updates localStorage after search via URL change', async () => {
     const user = userEvent.setup();
 
-    render(
-      <MemoryRouter initialEntries={['/?page=1']}>
-        <SearchPage />
-      </MemoryRouter>
-    );
+    renderWidthRouter(<SearchPage />);
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button', { name: /search/i });

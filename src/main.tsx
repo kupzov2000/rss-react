@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { ErrorBoundary } from './app/providers/error-boundary';
 import { Router } from './app/routes/route';
+import { Provider } from 'react-redux';
+import { store } from './app/store/store';
 
 const root = document.querySelector('#root');
 
@@ -12,8 +14,10 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <ErrorBoundary>
-      <Router />
-    </ErrorBoundary>
+    <Provider store={store}>
+      <ErrorBoundary>
+        <Router />
+      </ErrorBoundary>
+    </Provider>
   </StrictMode>
 );

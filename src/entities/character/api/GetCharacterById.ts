@@ -16,7 +16,6 @@ export async function getCharacterById(id: string): Promise<Character | null> {
   }
 
   const data: Character = await response.json();
-  console.log('current:', data);
 
   return data;
 }

@@ -1,32 +1,28 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { vi, describe, test, expect } from 'vitest';
-import { searchCharacters } from '@/features/search-character';
+import { beforeEach, vi, describe, test, expect } from 'vitest';
 import { SearchPage } from '@/pages/search-page';
+import { getCharacters } from '@/entities/character';
+import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 
-vi.mock('@/features/search-character', async () => {
-  const actual = await vi.importActual('@/features/search-character');
+vi.mock('@/entities/character', () => ({
+  getCharacters: vi.fn(),
+}));
 
-  return {
-    ...actual,
-    searchCharacters: vi.fn(),
-  };
-});
-
-const mockedSearchCharacters = vi.mocked(searchCharacters);
+const mockedGetCharacters = vi.mocked(getCharacters);
 
 function renderPage() {
-  return render(
-    <MemoryRouter initialEntries={['/?page=1']}>
-      <SearchPage />
-    </MemoryRouter>
-  );
+  renderWidthRouter(<SearchPage />);
 }
 
 describe('SearchPage - success', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
+  });
+
   test('renders characters after successful search', async () => {
-    mockedSearchCharacters.mockResolvedValue({
+    mockedGetCharacters.mockResolvedValue({
       items: [
         {
           id: 1,
@@ -44,15 +40,13 @@ describe('SearchPage - success', () => {
         },
       ],
       pages: 1,
-      error: null,
-      loading: false,
     });
+
     renderPage();
 
     const user = userEvent.setup();
 
     await user.type(screen.getByPlaceholderText(/search by name/i), 'rick');
-
     await user.click(screen.getByRole('button', { name: /search/i }));
 
     expect(await screen.findByText(/rick sanchez/i)).toBeInTheDocument();
@@ -60,12 +54,15 @@ describe('SearchPage - success', () => {
 });
 
 describe('SearchPage - not found', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
+  });
+
   test('shows not found error', async () => {
-    mockedSearchCharacters.mockResolvedValue({
+    mockedGetCharacters.mockResolvedValue({
       items: [],
       pages: 0,
-      error: 'Character with this name not found',
-      loading: false,
     });
 
     renderPage();
@@ -73,7 +70,6 @@ describe('SearchPage - not found', () => {
     const user = userEvent.setup();
 
     await user.type(screen.getByPlaceholderText(/search by name/i), 'unknown');
-
     await user.click(screen.getByRole('button', { name: /search/i }));
 
     expect(await screen.findByText(/not found/i)).toBeInTheDocument();
@@ -81,20 +77,19 @@ describe('SearchPage - not found', () => {
 });
 
 describe('SearchPage - server error', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
+  });
+
   test('shows server error', async () => {
-    mockedSearchCharacters.mockResolvedValue({
-      items: [],
-      pages: 0,
-      error: 'Something went wrong',
-      loading: false,
-    });
+    mockedGetCharacters.mockRejectedValue(new Error('Something went wrong'));
 
     renderPage();
 
     const user = userEvent.setup();
 
     await user.type(screen.getByPlaceholderText(/search by name/i), 'rick');
-
     await user.click(screen.getByRole('button', { name: /search/i }));
 
     expect(

@@ -1,8 +1,14 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { Router } from '@/app/routes/route';
+import { renderWithProviders } from '@/shared/lib/test/render-with-providers';
 
 vi.mock('@/entities/character', () => ({
+  getCharacters: vi.fn().mockResolvedValue({
+    items: [],
+    pages: 0,
+  }),
+
   getCharacterById: vi.fn().mockResolvedValue({
     id: 1,
     name: 'Rick',
@@ -14,7 +20,8 @@ vi.mock('@/entities/character', () => ({
 
 function renderApp(route: string) {
   globalThis.history.pushState({}, 'Test page', route);
-  return render(<Router />);
+
+  return renderWithProviders(<Router />);
 }
 
 describe('Router', () => {
