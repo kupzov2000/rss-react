@@ -1,7 +1,7 @@
 import { ResultList } from '@/entities/character/ui';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { MemoryRouter } from 'react-router-dom';
+import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 
 describe('ResultList', () => {
   it('renders all cards from props', () => {
@@ -22,11 +22,7 @@ describe('ResultList', () => {
       },
     ];
 
-    render(
-      <MemoryRouter>
-        <ResultList viewModelCards={mockData} />
-      </MemoryRouter>
-    );
+    renderWidthRouter(<ResultList viewModelCards={mockData} />);
 
     const items = screen.getAllByRole('listitem');
     expect(items).toHaveLength(mockData.length);

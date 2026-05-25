@@ -1,33 +1,44 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import './Menu.css';
-import { ErrorViewButton } from '@/features/error-view-toggle';
-import { useState } from 'react';
+import { crash, ErrorViewButton } from '@/features/error-view-toggle';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { ThemeToggleButton } from '@/features/theme-toggle';
 
 export function Menu() {
-  const [shouldCrash, setShouldCrash] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const shouldCrash = useAppSelector((state) => state.errorView.shouldCrash);
 
   if (shouldCrash) {
     throw new Error('Test error from Error Button');
   }
 
   function handleErrorView() {
-    setShouldCrash(true);
+    dispatch(crash());
   }
 
   return (
-    <div>
-      <div className="button-actions">
+    <div className="layout">
+      <header className="layout__header">
         <nav className="nav-menu">
           <NavLink to="/" className="button">
             Home
           </NavLink>
+
           <NavLink to="about" className="button">
             About
           </NavLink>
         </nav>
-        <ErrorViewButton onClick={handleErrorView} />
-      </div>
-      <Outlet></Outlet>
+
+        <div className="button-actions">
+          <ThemeToggleButton />
+          <ErrorViewButton onClick={handleErrorView} />
+        </div>
+      </header>
+
+      <main className="layout__main">
+        <Outlet />
+      </main>
     </div>
   );
 }

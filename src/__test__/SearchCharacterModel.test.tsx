@@ -1,18 +1,27 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { searchCharacterModel } from '@/features/search-character';
 import { getCharacters } from '@/entities/character';
 import mockCharacter from './MockCharacter';
+import { configureStore } from '@reduxjs/toolkit';
+import { searchCharacters, searchReducer } from '@/features/search-character';
 
 vi.mock('@/entities/character', () => ({
   getCharacters: vi.fn(),
 }));
 
-describe('searchCharacterModel cache', () => {
+function createTestStore() {
+  return configureStore({
+    reducer: {
+      searchCharacter: searchReducer,
+    },
+  });
+}
+
+describe('searchCharacters thunk', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('does not call API twice for same value', async () => {
+  it('calls API when search is dispatched', async () => {
     const mockedGetCharacters = vi.mocked(getCharacters);
 
     mockedGetCharacters.mockResolvedValue({
@@ -20,9 +29,11 @@ describe('searchCharacterModel cache', () => {
       pages: 1,
     });
 
-    await searchCharacterModel.search('Rick', 1);
-    await searchCharacterModel.search('Rick', 1);
+    const store = createTestStore();
+
+    await store.dispatch(searchCharacters({ name: 'Rick', page: 1 }));
 
     expect(mockedGetCharacters).toHaveBeenCalledTimes(1);
+    expect(mockedGetCharacters).toHaveBeenCalledWith('Rick', 1);
   });
 });

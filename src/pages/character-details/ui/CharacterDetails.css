@@ -1,58 +1,60 @@
 .details-panel {
-  background-color: #255fff;
-  border-radius: 6px;
-  align-self: flex-start;
   position: sticky;
   top: 0;
-  height: 100vh;
-}
 
-.details-panel {
   width: 420px;
+  height: 100vh;
   flex-shrink: 0;
+  align-self: flex-start;
   display: flex;
   flex-direction: column;
-  color: #e2e8f0;
-  margin-left: 20px;
-  background: #f8fbff;
-  border: 1px solid #0f346614;
+  margin-left: var(--space-xl);
+  
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
 }
 
 .details-panel .button {
   align-self: flex-end;
   width: 120px;
-  border: 1px solid #255fff33;
-  background-color: #fff;
-  color: #255fff;;
+  color: var(--accent);
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
 }
 
 .details-panel .button:hover {
-  background-color: #fff;
-  color: #255fff;;
+  color: var(--accent-text);
+    background: var(--accent);
+    border-color: var(--accent);
 }
 
 .main_detail {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main_detail__item {
+  width: 100%;
+    max-width: 340px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  background: #1e293b;
-  padding: 16px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  max-width: 340px;
-  width: 100%;
+  gap: var(--space-lg);
+    padding: var(--space-lg);
+    color: var(--text);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
 }
 
 .main_detail__img {
   width: 100%;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   object-fit: cover;
 }
 
@@ -60,26 +62,27 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
+  gap: var(--space-xs);
+    text-align: left;
 }
 
 .main_detail__name {
+  color: var(--text-h);
   font-size: 18px;
   font-weight: 600;
 }
 
 .main_detail__gender,
 .main_detail__status {
+  color: var(--text-muted);
   font-size: 14px;
-  color: #94a3b8;
 }
 
 @media (max-width: 740px) {
   .details-panel {
+    position: static;
     width: 100%;
-    height: 100%;
-  }
-  .main_detail {
-
+    height: auto;
+      margin-left: 0;
   }
 }

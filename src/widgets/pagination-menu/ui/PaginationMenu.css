@@ -1,4 +1,13 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
 .pagination__current-page {
+  min-width: 40px;
+    color: var(--text-h);
   font-size: 20px;
-  color: #000;
+  font-weight: 600;
 }

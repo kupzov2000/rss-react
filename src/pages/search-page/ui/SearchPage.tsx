@@ -1,22 +1,32 @@
 import {
-  initialState,
-  reducer,
   searchCharacters,
+  setQuery,
+  setValue,
 } from '@/features/search-character';
 import { SearchBar, SearchContent } from '@/features/search-character/ui';
 import { PaginationMenu } from '@/widgets/pagination-menu';
-import { useEffect, useReducer, type ChangeEvent } from 'react';
+import { useEffect, type ChangeEvent } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import './SearchPage.css';
 import { useLocalStorage } from '@/shared/lib/storage';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { SelectedCharacters } from '@/widgets/selected-characters';
 
 export default function SearchPage() {
+  const dispatch = useAppDispatch();
+
+  const results = useAppSelector((state) => state.selectCharacter.results);
+
+  const items = useAppSelector((state) => state.searchCharacter.items);
+  const pages = useAppSelector((state) => state.searchCharacter.pages);
+  const value = useAppSelector((state) => state.searchCharacter.value);
+  const loading = useAppSelector((state) => state.searchCharacter.loading);
+  const error = useAppSelector((state) => state.searchCharacter.error);
+  const query = useAppSelector((state) => state.searchCharacter.query);
+
   const [savedSearch, setSavedSearch] = useLocalStorage('search_data', '');
-  const [state, dispatch] = useReducer(reducer, {
-    ...initialState,
-    value: savedSearch,
-  });
   const [searchParameters, setSearchParameters] = useSearchParams();
+
   const page = Number(searchParameters.get('page')) || 1;
 
   useEffect(() => {
@@ -30,45 +40,43 @@ export default function SearchPage() {
   }, [searchParameters, setSearchParameters]);
 
   useEffect(() => {
-    const load = async () => {
-      dispatch({
-        type: 'SEARCH_START',
-        payload: state.value.trim(),
-      });
+    dispatch(setValue(savedSearch));
+    dispatch(setQuery(savedSearch));
+  }, [dispatch, savedSearch]);
 
-      const data = await searchCharacters(state.value, page);
+  useEffect(() => {
+    const currentSearchValue = value || savedSearch;
 
-      dispatch({
-        type: 'SEARCH_RESULT',
-        payload: data,
-      });
-    };
-
-    load();
-  }, [page]);
+    dispatch(searchCharacters({ name: currentSearchValue, page }));
+  }, [dispatch, page]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    dispatch({ type: 'SET_VALUE', payload: event.currentTarget.value });
+    dispatch(setValue(event.currentTarget.value));
   }
 
   function handleSearch() {
-    setSavedSearch(state.value);
+    const trimmed = value.trim();
+
+    const isCurrentSearch = trimmed === query;
+
+    if (isCurrentSearch) {
+      return;
+    }
+
+    dispatch(setValue(trimmed));
+    dispatch(setQuery(savedSearch));
+
+    setSavedSearch(trimmed);
     setSearchParameters({ page: '1' });
 
-    searchCharacters(state.value, 1).then((data) => {
-      dispatch({ type: 'SEARCH_RESULT', payload: data });
-    });
-  }
-
-  if (state.shouldCrash) {
-    throw new Error('Test error from Error Button');
+    dispatch(searchCharacters({ name: trimmed, page: 1 }));
   }
 
   return (
     <div className="search-layout">
       <header className="header">
         <SearchBar
-          value={state.value}
+          value={value}
           onChange={handleChange}
           onClick={handleSearch}
           placeholder="Search by name..."
@@ -76,12 +84,9 @@ export default function SearchPage() {
       </header>
       <main className="main">
         <div className="main__left">
-          <PaginationMenu pages={state.pages} />
-          <SearchContent
-            loading={state.loading}
-            error={state.error}
-            items={state.items}
-          />
+          <PaginationMenu pages={pages} />
+          <SearchContent loading={loading} error={error} items={items} />
+          {results.length > 0 ? <SelectedCharacters /> : ''}
         </div>
         <Outlet></Outlet>
       </main>

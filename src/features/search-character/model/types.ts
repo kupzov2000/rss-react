@@ -1,9 +1,4 @@
-import type { Character, SearchData } from '@/entities/character';
-
-export type SearchResult =
-  | { type: 'SUCCESS'; data: SearchData }
-  | { type: 'NOT_FOUND' }
-  | { type: 'SERVER_ERROR' };
+import type { Character } from '@/entities/character';
 
 export interface SearchResultData {
   error: string | null;
@@ -12,17 +7,16 @@ export interface SearchResultData {
   pages: number;
 }
 
-export type Action =
-  | { type: 'SET_VALUE'; payload: string }
-  | { type: 'SEARCH_START'; payload: string }
-  | { type: 'SEARCH_RESULT'; payload: SearchResultData }
-  | { type: 'CRASH' };
-
 export interface State {
   error: string | null;
   items: Character[];
   loading: boolean;
   pages: number;
-  shouldCrash: boolean;
   value: string;
+  query: string;
+}
+
+export interface SearchCharactersPayload {
+  name: string;
+  page: number;
 }

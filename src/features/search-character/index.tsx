@@ -1,7 +1,8 @@
-export { initialState } from './model/InitialState';
-export { reducer } from './model/reducer';
-export { searchCharacters } from './model/search';
+export {
+  resetSearch,
+  searchReducer,
+  setValue,
+  setQuery,
+} from './model/SearchSlice';
 
-export { default as mapResultToState } from './lib/MapResultToState';
-
-export { searchCharacterModel } from './model/SearchCharacter';
+export { searchCharacters } from './model/SearchCharacterThunks';
