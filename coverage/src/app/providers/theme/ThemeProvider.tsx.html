@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,35 +103,35 @@
 <a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,29 +146,29 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 &nbsp;
-function <span class="fstat-no" title="function not covered" >getInitialTheme(): Theme {</span>
-  const savedTheme = <span class="cstat-no" title="statement not covered" >localStorage.getItem(THEME_STORAGE_KEY);</span>
+function getInitialTheme(): Theme {
+  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (savedTheme === 'light' || savedTheme === 'dark') {</span>
-<span class="cstat-no" title="statement not covered" >    return savedTheme;</span>
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    return savedTheme;
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return 'light';</span>
+  return 'light';
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >ThemeProvider({</span> children }: ThemeProviderProps) {
-  const [theme, <span class="cstat-no" title="statement not covered" >setTheme] = useState&lt;Theme&gt;(getInitialTheme);</span>
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [theme, setTheme] = useState&lt;Theme&gt;(getInitialTheme);
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  useEffect(() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >    document.documentElement.dataset.theme = theme;</span>
-<span class="cstat-no" title="statement not covered" >    localStorage.setItem(THEME_STORAGE_KEY, theme);</span>
+  useEffect(() =&gt; {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >toggleTheme() {</span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    setTheme((c</span>urrentTheme) =&gt; (<span class="cstat-no" title="statement not covered" >currentTheme === 'light' ? 'dark' : 'light'));</span></span>
+  function toggleTheme() {
+    setTheme((currentTheme) =&gt; (currentTheme === 'light' ? 'dark' : 'light'));
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;ThemeContext.Provider value={{ theme, toggleTheme }}&gt;
       {children}
     &lt;/ThemeContext.Provider&gt;
@@ -181,7 +181,7 @@ export function <span class="fstat-no" title="function not covered" >ThemeProvid
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-25T21:42:38.751Z
+                at 2026-05-25T22:34:57.152Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

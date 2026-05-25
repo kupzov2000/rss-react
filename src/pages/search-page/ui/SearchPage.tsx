@@ -10,9 +10,12 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import './SearchPage.css';
 import { useLocalStorage } from '@/shared/lib/storage';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { SelectedCharacters } from '@/widgets/SelectedCharacters';
 
 export default function SearchPage() {
   const dispatch = useAppDispatch();
+
+  const results = useAppSelector((state) => state.selectCharacter.results);
 
   const items = useAppSelector((state) => state.searchCharacter.items);
   const pages = useAppSelector((state) => state.searchCharacter.pages);
@@ -83,6 +86,7 @@ export default function SearchPage() {
         <div className="main__left">
           <PaginationMenu pages={pages} />
           <SearchContent loading={loading} error={error} items={items} />
+          {results.length > 0 ? <SelectedCharacters /> : ''}
         </div>
         <Outlet></Outlet>
       </main>

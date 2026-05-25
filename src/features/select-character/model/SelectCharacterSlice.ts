@@ -22,10 +22,14 @@ export const selectCharacterSlice = createSlice({
         (character) => character.id !== action.payload.id
       );
     },
+
+    clearAllCharacters: (state) => {
+      state.results = [];
+    },
   },
 });
 
-export const { addSelectCharacter, removeSelectCharacter } =
+export const { addSelectCharacter, removeSelectCharacter, clearAllCharacters } =
   selectCharacterSlice.actions;
 
 export const selectCharacter = selectCharacterSlice.reducer;

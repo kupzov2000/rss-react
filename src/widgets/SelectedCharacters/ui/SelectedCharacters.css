@@ -1,0 +1,107 @@
+.selected-wrapper {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-characters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: 20px;
+  padding: 12px 12px 12px 24px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+}
+
+.selected-characters__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.selected-characters__count {
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-text);
+  background: var(--accent);
+  border-radius: var(--radius-md);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.selected-characters__text {
+  color: var(--text-h);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.selected-characters__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.selected-characters__button {
+  min-width: 100px;
+}
+
+.selected-characters__button_clear {
+  color: var(--danger-text);
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+.selected-characters__button_clear:not(:disabled):hover {
+  background: var(--danger-hover);
+  border-color: var(--danger-hover);
+}
+
+.selected-characters__button_clear:not(:disabled):active {
+  background: var(--danger-active);
+  border-color: var(--danger-active);
+}
+
+.selected-characters__button_download {
+  color: var(--accent-text);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.selected-characters__button_download:not(:disabled):hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.selected-characters__button_download:not(:disabled):active {
+  background: var(--accent-active);
+  border-color: var(--accent-active);
+}
+
+@media (max-width: 640px) {
+  .selected-characters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .selected-characters__info,
+  .selected-characters__actions {
+    justify-content: center;
+  }
+
+  .selected-characters__button {
+    flex: 1;
+  }
+}
