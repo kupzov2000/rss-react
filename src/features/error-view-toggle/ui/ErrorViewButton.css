@@ -1,13 +1,17 @@
 .error__button {
-  background: #82181a;
-  color: #fff;
+  color: var(--danger-text);
+    background: var(--danger);
+    border-color: var(--danger);
 }
 
 .button.error__button:hover {
-  background: #d44648;
+  color: var(--danger-text);
+    background: var(--danger-hover);
+    border-color: var(--danger-hover);
 }
 
 .button.error__button:active {
-  background: #82181a;
-  border-color: #82181a;
+  color: var(--danger-text);
+    background: var(--danger-active);
+    border-color: var(--danger-active);
 }

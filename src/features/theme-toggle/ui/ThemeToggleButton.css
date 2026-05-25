@@ -1,0 +1,14 @@
+.theme-toggle-button {
+  padding: 8px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+
+  cursor: pointer;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--button-hover-bg-color);
+}

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1779706777790" clover="3.2.0">
-  <project timestamp="1779706777790" name="All files">
-    <metrics statements="142" coveredstatements="123" conditionals="43" coveredconditionals="37" methods="56" coveredmethods="46" elements="241" coveredelements="206" complexity="0" loc="142" ncloc="142" packages="34" files="46" classes="46"/>
+<coverage generated="1779716494116" clover="3.2.0">
+  <project timestamp="1779716494116" name="All files">
+    <metrics statements="158" coveredstatements="129" conditionals="51" coveredconditionals="38" methods="64" coveredmethods="48" elements="273" coveredelements="215" complexity="0" loc="158" ncloc="158" packages="37" files="51" classes="51"/>
     <package name="src">
       <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="main.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\main.tsx">
         <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.__test__">
@@ -31,6 +31,31 @@
         <line num="28" count="0" type="stmt"/>
       </file>
       <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\app\providers\error-boundary\index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.app.providers.theme">
+      <metrics statements="13" coveredstatements="3" conditionals="6" coveredconditionals="0" methods="7" coveredmethods="1"/>
+      <file name="ThemeContext.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\app\providers\theme\ThemeContext.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+      </file>
+      <file name="ThemeProvider.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\app\providers\theme\ThemeProvider.tsx">
+        <metrics statements="11" coveredstatements="1" conditionals="6" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="32" count="0" type="stmt"/>
+      </file>
+      <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\app\providers\theme\index.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
@@ -198,6 +223,21 @@
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
+    <package name="src.features.theme-toggle">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\features\theme-toggle\index.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.features.theme-toggle.ui">
+      <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <file name="ThemeToggleButton.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\features\theme-toggle\ui\ThemeToggleButton.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="9" count="3" type="stmt"/>
+      </file>
+    </package>
     <package name="src.pages.about-page">
       <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\pages\about-page\index.ts">
@@ -355,12 +395,12 @@
       <metrics statements="6" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
       <file name="Menu.tsx" path="C:\Users\1\REACT-RSSCHOOL_STUDY\projects\app-state-management\rss-react\src\widgets\menu\ui\Menu.tsx">
         <metrics statements="6" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
-        <line num="7" count="3" type="stmt"/>
-        <line num="9" count="10" type="stmt"/>
-        <line num="11" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="19" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="10" count="10" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.widgets.pagination-menu">

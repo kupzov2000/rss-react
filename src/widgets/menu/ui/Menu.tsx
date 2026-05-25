@@ -2,6 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import './Menu.css';
 import { crash, ErrorViewButton } from '@/features/error-view-toggle';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { ThemeToggleButton } from '@/features/theme-toggle';
 
 export function Menu() {
   const dispatch = useAppDispatch();
@@ -17,19 +18,27 @@ export function Menu() {
   }
 
   return (
-    <div>
-      <div className="button-actions">
+    <div className="layout">
+      <header className="layout__header">
         <nav className="nav-menu">
           <NavLink to="/" className="button">
             Home
           </NavLink>
+
           <NavLink to="about" className="button">
             About
           </NavLink>
         </nav>
-        <ErrorViewButton onClick={handleErrorView} />
-      </div>
-      <Outlet></Outlet>
+
+        <div className="button-actions">
+          <ThemeToggleButton />
+          <ErrorViewButton onClick={handleErrorView} />
+        </div>
+      </header>
+
+      <main className="layout__main">
+        <Outlet />
+      </main>
     </div>
   );
 }

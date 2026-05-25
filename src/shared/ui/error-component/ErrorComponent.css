@@ -1,27 +1,37 @@
 .error__wrapper {
-  height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-lg);
+    padding: var(--space-xl);
+    color: var(--text);
+    background: var(--bg);
   line-height: 1.1;
 }
 
 .error__refresh {
+  min-height: 40px;
   padding: 10px 20px;
-  border: 0px;
-  border-radius: 6px;
-  background: #82181a;
+  border: 1px solid var(--danger);
+    border-radius: var(--radius-sm);
+    color: var(--danger-text);
+    background: var(--danger);
   font-size: 18px;
-  color: #fff;
   cursor: pointer;
+  transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
 }
 
 .error__refresh:hover {
-  background: #d44648;
+  background: var(--danger-hover);
+    border-color: var(--danger-hover);
 }
 
 .error__refresh:active {
-  background: #82181a;
-  border-color: #82181a;
+  background: var(--danger-active);
+    border-color: var(--danger-active);
 }
