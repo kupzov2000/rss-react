@@ -10,7 +10,7 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import './SearchPage.css';
 import { useLocalStorage } from '@/shared/lib/storage';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { SelectedCharacters } from '@/widgets/SelectedCharacters';
+import { SelectedCharacters } from '@/widgets/selected-characters';
 
 export default function SearchPage() {
   const dispatch = useAppDispatch();

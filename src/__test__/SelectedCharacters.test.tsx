@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { describe, expect, it } from 'vitest';
 
 import { selectCharacter } from '@/features/select-character';
-import { SelectedCharacters } from '@/widgets/SelectedCharacters';
+import { SelectedCharacters } from '@/widgets/selected-characters';
 
 function renderSelectedCharactersWithState() {
   const store = configureStore({

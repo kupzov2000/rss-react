@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { clearAllCharacters } from '@/features/select-character';
+import {
+  clearAllCharacters,
+  downloadSelectedCharactersCsv,
+} from '@/features/select-character';
 import './SelectedCharacters.css';
 
 export function SelectedCharacters() {
@@ -10,6 +13,10 @@ export function SelectedCharacters() {
 
   function handleClearClick() {
     dispatch(clearAllCharacters());
+  }
+
+  function handleDownloadClick() {
+    downloadSelectedCharactersCsv(results);
   }
 
   return (
@@ -33,6 +40,7 @@ export function SelectedCharacters() {
           <button
             className="button selected-characters__button selected-characters__button_download"
             type="button"
+            onClick={handleDownloadClick}
           >
             Download
           </button>
