@@ -1,5 +1,6 @@
 import { errorViewReducer } from '@/features/error-view-toggle';
 import { searchReducer } from '@/features/search-character';
+import { selectCharacter } from '@/features/select-character';
 import {
   configureStore,
   type Action,
@@ -9,6 +10,7 @@ import {
 export const store = configureStore({
   reducer: {
     searchCharacter: searchReducer,
+    selectCharacter,
     errorView: errorViewReducer,
   },
 });

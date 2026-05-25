@@ -1,7 +1,7 @@
 import ResultItem from '@/entities/character/ui/ResultItem';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { MemoryRouter } from 'react-router-dom';
+import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 
 describe('testing result item', () => {
   it('renders card information correctly', () => {
@@ -13,11 +13,7 @@ describe('testing result item', () => {
       status: 'Alive',
     };
 
-    render(
-      <MemoryRouter>
-        <ResultItem card={mockData} page="1" />
-      </MemoryRouter>
-    );
+    renderWidthRouter(<ResultItem card={mockData} page="1" />);
 
     expect(screen.getByText(/full name: rick sanchez/i)).toBeInTheDocument();
     expect(screen.getByText(/gender: male/i)).toBeInTheDocument();

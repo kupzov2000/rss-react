@@ -19,6 +19,7 @@ export default function SearchPage() {
   const value = useAppSelector((state) => state.searchCharacter.value);
   const loading = useAppSelector((state) => state.searchCharacter.loading);
   const error = useAppSelector((state) => state.searchCharacter.error);
+  const query = useAppSelector((state) => state.searchCharacter.query);
 
   const [savedSearch, setSavedSearch] = useLocalStorage('search_data', '');
   const [searchParameters, setSearchParameters] = useSearchParams();
@@ -52,6 +53,12 @@ export default function SearchPage() {
 
   function handleSearch() {
     const trimmed = value.trim();
+
+    const isCurrentSearch = trimmed === query;
+
+    if (isCurrentSearch) {
+      return;
+    }
 
     dispatch(setValue(trimmed));
     dispatch(setQuery(savedSearch));
