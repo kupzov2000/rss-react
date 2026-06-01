@@ -1,20 +1,32 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SearchPage } from '@/pages/search-page';
 import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 
-vi.mock('@/entities/character', () => ({
-  getCharacters: vi.fn(async () => ({
-    items: [],
-    pages: 0,
-  })),
-}));
+function mockEmptyCharactersResponse() {
+  return Response.json(
+    {
+      info: {
+        pages: 0,
+      },
+      results: [],
+    },
+    { status: 200 }
+  );
+}
 
 describe('SearchPage localStorage', () => {
   beforeEach(() => {
     localStorage.clear();
-    vi.clearAllMocks();
+
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      mockEmptyCharactersResponse()
+    );
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('shows empty input when localStorage is empty', () => {

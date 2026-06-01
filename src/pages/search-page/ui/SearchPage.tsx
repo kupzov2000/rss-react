@@ -1,8 +1,4 @@
-import {
-  searchCharacters,
-  setQuery,
-  setValue,
-} from '@/features/search-character';
+import { setQuery, setValue } from '@/features/search-character';
 import { SearchBar, SearchContent } from '@/features/search-character/ui';
 import { PaginationMenu } from '@/widgets/pagination-menu';
 import { useEffect, type ChangeEvent } from 'react';
@@ -11,23 +7,37 @@ import './SearchPage.css';
 import { useLocalStorage } from '@/shared/lib/storage';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { SelectedCharacters } from '@/widgets/selected-characters';
+import { useGetCharactersQuery } from '@/entities/character';
 
 export default function SearchPage() {
   const dispatch = useAppDispatch();
 
   const results = useAppSelector((state) => state.selectCharacter.results);
 
-  const items = useAppSelector((state) => state.searchCharacter.items);
-  const pages = useAppSelector((state) => state.searchCharacter.pages);
   const value = useAppSelector((state) => state.searchCharacter.value);
-  const loading = useAppSelector((state) => state.searchCharacter.loading);
-  const error = useAppSelector((state) => state.searchCharacter.error);
   const query = useAppSelector((state) => state.searchCharacter.query);
 
   const [savedSearch, setSavedSearch] = useLocalStorage('search_data', '');
   const [searchParameters, setSearchParameters] = useSearchParams();
 
   const page = Number(searchParameters.get('page')) || 1;
+
+  const { data, isLoading, isFetching, isError } = useGetCharactersQuery({
+    name: query,
+    page,
+  });
+
+  const items = data?.items ?? [];
+  const pages = data?.pages ?? 0;
+  const loading = isLoading || isFetching;
+
+  const hasNoResults = !loading && !isError && items.length === 0;
+
+  const error = isError
+    ? 'Something went wrong. Try again later.'
+    : hasNoResults
+      ? 'Character with this name not found'
+      : null;
 
   useEffect(() => {
     if (!searchParameters.get('page')) {
@@ -44,12 +54,6 @@ export default function SearchPage() {
     dispatch(setQuery(savedSearch));
   }, [dispatch, savedSearch]);
 
-  useEffect(() => {
-    const currentSearchValue = value || savedSearch;
-
-    dispatch(searchCharacters({ name: currentSearchValue, page }));
-  }, [dispatch, page]);
-
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch(setValue(event.currentTarget.value));
   }
@@ -64,12 +68,10 @@ export default function SearchPage() {
     }
 
     dispatch(setValue(trimmed));
-    dispatch(setQuery(savedSearch));
+    dispatch(setQuery(trimmed));
 
     setSavedSearch(trimmed);
     setSearchParameters({ page: '1' });
-
-    dispatch(searchCharacters({ name: trimmed, page: 1 }));
   }
 
   return (
@@ -88,7 +90,7 @@ export default function SearchPage() {
           <SearchContent loading={loading} error={error} items={items} />
           {results.length > 0 ? <SelectedCharacters /> : ''}
         </div>
-        <Outlet></Outlet>
+        <Outlet />
       </main>
     </div>
   );

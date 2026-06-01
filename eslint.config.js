@@ -97,4 +97,16 @@ export default defineConfig([
       'max-lines-per-function': 'off',
     },
   },
+  {
+    files: ['src/app/store/store.ts'],
+    rules: {
+      'unicorn/prefer-spread': 'off',
+    },
+  },
+  {
+    files: ['src/__test__/CreateTestStore.ts'],
+    rules: {
+      'unicorn/prefer-spread': 'off',
+    },
+  },
 ]);

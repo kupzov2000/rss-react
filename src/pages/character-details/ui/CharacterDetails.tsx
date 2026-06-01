@@ -1,33 +1,43 @@
-import { getCharacterById, type Character } from '@/entities/character';
+import { useGetCharacterByIdQuery } from '@/entities/character';
 import { LoadingSpinner } from '@/shared/ui/spinner';
-import { useEffect, useState } from 'react';
+import { type ReactNode } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import './CharacterDetails.css';
+import { CharacterDetailsCard } from './CharacterDetailsCard';
 
 export function CharacterDetails() {
   const { id } = useParams();
   const [searchParameters] = useSearchParams();
   const navigate = useNavigate();
 
-  const [character, setCharacter] = useState<Character | null>(null);
-
   const page = searchParameters.get('page') || '1';
+  const {
+    data: character,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetCharacterByIdQuery(id ?? '', {
+    skip: !id,
+  });
 
-  useEffect(() => {
-    async function load() {
-      if (!id) {
-        return;
-      }
-
-      const data = await getCharacterById(id);
-      setCharacter(data);
-    }
-
-    load();
-  }, [id]);
+  const isPending = isLoading || isFetching;
 
   function handleClose() {
     navigate(`/?page=${page}`);
+  }
+
+  let content: ReactNode;
+
+  if (!id) {
+    content = <p>Character id is missing</p>;
+  } else if (isPending) {
+    content = <LoadingSpinner />;
+  } else if (isError) {
+    content = <p>Something went wrong. Try again later.</p>;
+  } else if (character === null) {
+    content = <p>Character not found</p>;
+  } else if (character) {
+    content = <CharacterDetailsCard character={character} />;
   }
 
   return (
@@ -35,30 +45,7 @@ export function CharacterDetails() {
       <button className="button" onClick={handleClose}>
         Close
       </button>
-      {character ? (
-        <div className="main_detail">
-          <article className="main_detail__item">
-            <img
-              className="main_detail__img"
-              src={character.image}
-              alt={character.name}
-            />
-            <div className="main_detail__content">
-              <span className="main_detail__name">
-                Full name: {character.name}
-              </span>
-              <span className="main_detail__gender">
-                Gender: {character.gender}
-              </span>
-              <span className="main_detail__status">
-                Status: {character.status}
-              </span>
-            </div>
-          </article>
-        </div>
-      ) : (
-        <LoadingSpinner />
-      )}
+      {content}
     </div>
   );
 }
