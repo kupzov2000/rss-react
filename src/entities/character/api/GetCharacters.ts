@@ -6,10 +6,15 @@ type NotFoundResponse = {
   error: string;
 };
 
-interface CharacterTag {
-  type: 'Characters';
-  id: number | 'LIST';
-}
+type CharacterTag =
+  | {
+      type: 'CharactersList';
+      id: 'LIST';
+    }
+  | {
+      type: 'CharacterDetails';
+      id: number;
+    };
 
 interface GetCharactersQuery {
   name: string;
@@ -21,21 +26,26 @@ const cacheTtl = getTimeSaveCache();
 const ERROR_NOT_FOUND = 404;
 const SUCCESS_STATUS = 200;
 
-function createCharacterTag(id: number | 'LIST'): CharacterTag {
+function createCharactersListTag(): CharacterTag {
   return {
-    type: 'Characters',
-    id,
+    type: 'CharactersList',
+    id: 'LIST',
   };
 }
 
-function createCharacterIdTag(id: string): CharacterTag[] {
+function createCharacterDetailsTag(id: string): CharacterTag[] {
   const numericId = Number(id);
 
   if (!Number.isFinite(numericId)) {
     return [];
   }
 
-  return [createCharacterTag(numericId)];
+  return [
+    {
+      type: 'CharacterDetails',
+      id: numericId,
+    },
+  ];
 }
 
 export const charactersApi = createApi({
@@ -43,7 +53,7 @@ export const charactersApi = createApi({
 
   baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api/' }),
 
-  tagTypes: ['Characters'],
+  tagTypes: ['CharactersList', 'CharacterDetails'],
 
   keepUnusedDataFor: cacheTtl,
   refetchOnReconnect: true,
@@ -75,7 +85,7 @@ export const charactersApi = createApi({
       },
 
       providesTags: (_result, _error, id): CharacterTag[] =>
-        createCharacterIdTag(id),
+        createCharacterDetailsTag(id),
     }),
 
     getCharacters: builder.query<SearchData, GetCharactersQuery>({
@@ -107,15 +117,7 @@ export const charactersApi = createApi({
         };
       },
 
-      providesTags: (result): CharacterTag[] =>
-        result
-          ? [
-              ...result.items.map((character) =>
-                createCharacterTag(character.id)
-              ),
-              createCharacterTag('LIST'),
-            ]
-          : [createCharacterTag('LIST')],
+      providesTags: (): CharacterTag[] => [createCharactersListTag()],
     }),
   }),
 });

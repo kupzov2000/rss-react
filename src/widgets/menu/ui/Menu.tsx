@@ -33,7 +33,16 @@ export function Menu() {
 
         <div className="button-actions">
           <ThemeToggleButton />
-          <RefreshCacheButton />
+          <RefreshCacheButton
+            tags={[
+              {
+                type: 'CharactersList',
+                id: 'LIST',
+              },
+            ]}
+          >
+            <span>Refresh Characters</span>
+          </RefreshCacheButton>
           <ErrorViewButton onClick={handleErrorView} />
         </div>
       </header>
