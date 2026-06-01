@@ -1,7 +1,7 @@
 import { ResultList } from '@/entities/character/ui';
+import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 
 describe('ResultList', () => {
   it('renders all cards from props', () => {

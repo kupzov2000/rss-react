@@ -1,15 +1,47 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, vi, describe, test, expect } from 'vitest';
+import { beforeEach, afterEach, vi, describe, test, expect } from 'vitest';
 import { SearchPage } from '@/pages/search-page';
-import { getCharacters } from '@/entities/character';
+import mockCharacter from './MockCharacter';
 import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
+import { store } from '@/app/store/store';
+import { charactersApi } from '@/entities/character';
 
-vi.mock('@/entities/character', () => ({
-  getCharacters: vi.fn(),
-}));
+const character = mockCharacter({
+  id: 1,
+  name: 'Rick Sanchez',
+  gender: 'Male',
+  status: 'Alive',
+  species: 'Human',
+});
 
-const mockedGetCharacters = vi.mocked(getCharacters);
+function mockCharactersResponse(results = [character], pages = 1) {
+  return Response.json(
+    {
+      info: { pages },
+      results,
+    },
+    { status: 200 }
+  );
+}
+
+function mockNotFoundResponse() {
+  return Response.json(
+    {
+      error: 'There is nothing here',
+    },
+    { status: 404 }
+  );
+}
+
+function mockServerErrorResponse() {
+  return Response.json(
+    {
+      error: 'Something went wrong',
+    },
+    { status: 500 }
+  );
+}
 
 function renderPage() {
   renderWidthRouter(<SearchPage />);
@@ -17,30 +49,18 @@ function renderPage() {
 
 describe('SearchPage - success', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
     localStorage.clear();
   });
 
+  afterEach(() => {
+    store.dispatch(charactersApi.util.resetApiState());
+    vi.restoreAllMocks();
+  });
+
   test('renders characters after successful search', async () => {
-    mockedGetCharacters.mockResolvedValue({
-      items: [
-        {
-          id: 1,
-          name: 'Rick Sanchez',
-          gender: 'Male',
-          status: 'Alive',
-          species: 'Human',
-          type: '',
-          image: '',
-          url: '',
-          created: '',
-          episode: [],
-          location: { name: '', url: '' },
-          origin: { name: '', url: '' },
-        },
-      ],
-      pages: 1,
-    });
+    vi.spyOn(globalThis, 'fetch').mockImplementation(() =>
+      Promise.resolve(mockCharactersResponse([character], 1))
+    );
 
     renderPage();
 
@@ -51,19 +71,11 @@ describe('SearchPage - success', () => {
 
     expect(await screen.findByText(/rick sanchez/i)).toBeInTheDocument();
   });
-});
-
-describe('SearchPage - not found', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    localStorage.clear();
-  });
 
   test('shows not found error', async () => {
-    mockedGetCharacters.mockResolvedValue({
-      items: [],
-      pages: 0,
-    });
+    vi.spyOn(globalThis, 'fetch').mockImplementation(() =>
+      Promise.resolve(mockNotFoundResponse())
+    );
 
     renderPage();
 
@@ -74,16 +86,11 @@ describe('SearchPage - not found', () => {
 
     expect(await screen.findByText(/not found/i)).toBeInTheDocument();
   });
-});
-
-describe('SearchPage - server error', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    localStorage.clear();
-  });
 
   test('shows server error', async () => {
-    mockedGetCharacters.mockRejectedValue(new Error('Something went wrong'));
+    vi.spyOn(globalThis, 'fetch').mockImplementation(() =>
+      Promise.resolve(mockServerErrorResponse())
+    );
 
     renderPage();
 
