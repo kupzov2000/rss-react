@@ -1,7 +1,7 @@
 export {
   downloadSelectedCharactersCsv,
   escapeCsvValue,
-} from './lib/downloadSelectedCharactersCsv';
+} from './lib/DownloadSelectedCharactersCsv';
 
 export {
   addSelectCharacter,
