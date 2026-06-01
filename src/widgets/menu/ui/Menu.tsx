@@ -3,6 +3,7 @@ import './Menu.css';
 import { crash, ErrorViewButton } from '@/features/error-view-toggle';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { ThemeToggleButton } from '@/features/theme-toggle';
+import { RefreshCacheButton } from '@/features/refresh-cache';
 
 export function Menu() {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ export function Menu() {
 
         <div className="button-actions">
           <ThemeToggleButton />
+          <RefreshCacheButton />
           <ErrorViewButton onClick={handleErrorView} />
         </div>
       </header>

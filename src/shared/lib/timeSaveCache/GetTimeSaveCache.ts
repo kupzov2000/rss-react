@@ -1,10 +1,17 @@
-export function getTimeSaveCache() {
-  const DEFAULT_CACHE_TTL_SECONDS = 100;
-  const cacheTtlFromEnvironment = Number(import.meta.env.VITE_CACHE_TTL);
+const DEFAULT_CACHE_TTL_SECONDS = 600;
 
-  const cacheTtl = Number.isFinite(cacheTtlFromEnvironment)
-    ? cacheTtlFromEnvironment
-    : DEFAULT_CACHE_TTL_SECONDS;
+export function getTimeSaveCache() {
+  const rawCacheTtl = import.meta.env.VITE_CACHE_TTL;
+
+  if (!rawCacheTtl) {
+    return DEFAULT_CACHE_TTL_SECONDS;
+  }
+
+  const cacheTtl = Number(rawCacheTtl);
+
+  if (!Number.isFinite(cacheTtl) || cacheTtl <= 0) {
+    return DEFAULT_CACHE_TTL_SECONDS;
+  }
 
   return cacheTtl;
 }

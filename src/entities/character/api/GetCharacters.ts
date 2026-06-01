@@ -2,16 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { ApiResponse, Character, SearchData } from '../model/types';
 import { getTimeSaveCache } from '@/shared/lib/timeSaveCache';
 
-const cacheTtl = getTimeSaveCache();
-
-const ERROR_NOT_FOUND = 404;
-const SUCCESS_STATUS = 200;
-
-interface QueryString {
-  name: string;
-  page: number;
-}
-
 type NotFoundResponse = {
   error: string;
 };
@@ -20,6 +10,16 @@ interface CharacterTag {
   type: 'Characters';
   id: number | 'LIST';
 }
+
+interface GetCharactersQuery {
+  name: string;
+  page: number;
+}
+
+const cacheTtl = getTimeSaveCache();
+
+const ERROR_NOT_FOUND = 404;
+const SUCCESS_STATUS = 200;
 
 function createCharacterTag(id: number | 'LIST'): CharacterTag {
   return {
@@ -46,6 +46,7 @@ export const charactersApi = createApi({
   tagTypes: ['Characters'],
 
   keepUnusedDataFor: cacheTtl,
+  refetchOnReconnect: true,
 
   endpoints: (builder) => ({
     getCharacterById: builder.query<Character | null, string>({
@@ -77,7 +78,7 @@ export const charactersApi = createApi({
         createCharacterIdTag(id),
     }),
 
-    getCharacters: builder.query<SearchData, QueryString>({
+    getCharacters: builder.query<SearchData, GetCharactersQuery>({
       query: ({ name, page }) => ({
         url: 'character',
         method: 'GET',

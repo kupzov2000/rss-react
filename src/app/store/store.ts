@@ -7,6 +7,7 @@ import {
   type Action,
   type ThunkAction,
 } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,8 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(charactersApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type AppStore = typeof store;
 export type RootState = ReturnType<AppStore['getState']>;
