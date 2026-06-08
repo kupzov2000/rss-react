@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
 import { Modal } from '@/shared/ui/modal';
+import { UncontrolledForm } from '@/features/uncontrolled-form';
+import { SubmissionList } from '@/widgets/submission-list';
+import { HookForm } from '@/features/hook-form';
 
 export function HomePage() {
   const [isUncontrolledModalOpen, setIsUncontrolledModalOpen] = useState(false);
@@ -39,7 +42,7 @@ export function HomePage() {
         onClose={closeUncontrolledModal}
         title="Uncontrolled form"
       >
-        <p>неконтролируемая форма</p>
+        <UncontrolledForm onSuccess={closeUncontrolledModal} />
       </Modal>
 
       <Modal
@@ -47,8 +50,10 @@ export function HomePage() {
         onClose={closeHookFormModal}
         title="React Hook Form"
       >
-        <p>контролируемая форма</p>
+        <HookForm onSuccess={closeHookFormModal} />
       </Modal>
+
+      <SubmissionList />
     </main>
   );
 }

@@ -1,0 +1,43 @@
+.section {
+  margin-top: 32px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.card h3 {
+  margin: 0 0 16px;
+}
+
+.details {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.details div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px;
+}
+
+.details dt {
+  font-weight: 700;
+}
+
+.details dd {
+  margin: 0;
+}
