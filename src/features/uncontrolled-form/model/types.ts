@@ -6,6 +6,7 @@ type FieldName =
   | 'terms'
   | 'password'
   | 'confirmPassword'
-  | 'country';
+  | 'country'
+  | 'image';
 
 export type FormErrors = Partial<Record<FieldName, string>>;

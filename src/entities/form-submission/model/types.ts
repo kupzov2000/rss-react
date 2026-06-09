@@ -11,12 +11,19 @@ export interface FormSubmissionValues {
   password: string;
   confirmPassword: string;
   country: string;
+  image: File | null;
 }
 
-export interface FormSubmission extends Omit<
-  FormSubmissionValues,
-  'confirmPassword'
-> {
+export interface FormSubmission {
   id: string;
   formType: FormType;
+  createdAt: number;
+  name: string;
+  age: number;
+  email: string;
+  gender: Gender;
+  terms: boolean;
+  password: string;
+  country: string;
+  image: string;
 }

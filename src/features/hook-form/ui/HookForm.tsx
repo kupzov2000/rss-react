@@ -3,13 +3,17 @@ import { useForm } from 'react-hook-form';
 import {
   addSubmission,
   createFormSubmissionSchema,
-  removeConfirmPassword,
-  // formSubmissionSchema,
+  createSubmissionValues,
   type FormSubmissionValues,
 } from '@/entities/form-submission';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import styles from '@/shared/ui/form/Form.module.css';
-import { useMemo } from 'react';
+import { useMemo, type ChangeEvent } from 'react';
+import {
+  convertImageToBase64,
+  getFileFromInput,
+} from '@/shared/lib/image/image';
+import { PasswordStrengthIndicator } from '@/shared/ui/password-strength';
 
 interface Props {
   onSuccess: () => void;
@@ -25,10 +29,12 @@ export function HookForm({ onSuccess }: Props) {
   );
 
   const {
+    setValue,
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    watch,
+    formState: { errors, isValid, dirtyFields, submitCount },
   } = useForm<FormSubmissionValues>({
     resolver: yupResolver(schema),
     mode: 'onChange',
@@ -39,16 +45,37 @@ export function HookForm({ onSuccess }: Props) {
       password: '',
       confirmPassword: '',
       country: '',
+      image: null,
     },
   });
 
-  function onSubmit(values: FormSubmissionValues) {
-    const submissionValues = removeConfirmPassword(values);
+  const password = watch('password');
+  const shouldShowPasswordHint =
+    Boolean(dirtyFields.password && password.length > 0) || submitCount > 0;
+
+  function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = getFileFromInput(event.currentTarget.files);
+
+    setValue('image', file, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  }
+
+  async function onSubmit(values: FormSubmissionValues) {
+    if (!values.image) {
+      return;
+    }
+
+    const imageBase64 = await convertImageToBase64(values.image);
+    const submissionValues = createSubmissionValues(values, imageBase64);
 
     dispatch(
       addSubmission({
         id: crypto.randomUUID(),
         formType: 'react-hook-form',
+        createdAt: Date.now(),
         ...submissionValues,
       })
     );
@@ -156,7 +183,10 @@ export function HookForm({ onSuccess }: Props) {
           type="password"
           {...register('password')}
         />
-        <p className={styles.error}>{errors.password?.message}</p>
+        <PasswordStrengthIndicator
+          password={password}
+          shouldShow={shouldShowPasswordHint}
+        />
       </div>
 
       <div className={styles.field}>
@@ -191,6 +221,22 @@ export function HookForm({ onSuccess }: Props) {
           ))}
         </datalist>
         <p className={styles.error}>{errors.country?.message}</p>
+      </div>
+
+      <div className={styles.field}>
+        <label className={styles.label} htmlFor="hook-form-image">
+          Profile image
+        </label>
+
+        <input
+          className={styles.input}
+          id="hook-form-image"
+          type="file"
+          accept="image/png,image/jpeg,.jpg,.jpeg,.png"
+          onChange={handleImageChange}
+        />
+
+        <p className={styles.error}>{errors.image?.message}</p>
       </div>
 
       <button className={styles.submitButton} type="submit" disabled={!isValid}>

@@ -1,6 +1,13 @@
 import * as yup from 'yup';
 
 import type { FormSubmissionValues, Gender } from './types';
+import {
+  HEIGHT,
+  isAllowedImageSize,
+  isAllowedImageType,
+  MAX_IMAGE_SIZE_BYTES,
+  WIDTH,
+} from '@/shared/lib/image/image';
 
 const MIN_LENGTH_PARTS = 2;
 const GENDERS: Gender[] = ['male', 'female', 'other'];
@@ -77,6 +84,20 @@ export function createFormSubmissionSchema(countries: string[]) {
       .string()
       .required('Country is required')
       .oneOf(countries, 'Country must exist in the country list'),
+
+    image: yup
+      .mixed<File>()
+      .required('Image is required')
+      .test('file-type', 'Image must be PNG or JPEG', (value) => {
+        return value instanceof File && isAllowedImageType(value);
+      })
+      .test(
+        'file-size',
+        `Image must be less than ${MAX_IMAGE_SIZE_BYTES / WIDTH / HEIGHT}MB`,
+        (value) => {
+          return value instanceof File && isAllowedImageSize(value);
+        }
+      ),
   });
 
   return schema;

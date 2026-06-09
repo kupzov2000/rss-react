@@ -7,6 +7,7 @@ export function getUncontrolledFormValues(formData: FormData) {
   const password = formData.get('password');
   const confirmPassword = formData.get('confirmPassword');
   const country = formData.get('country');
+  const image = formData.get('image');
 
   return {
     name: typeof name === 'string' ? name : '',
@@ -17,5 +18,6 @@ export function getUncontrolledFormValues(formData: FormData) {
     password: typeof password === 'string' ? password : '',
     confirmPassword: typeof confirmPassword === 'string' ? confirmPassword : '',
     country: typeof country === 'string' ? country : '',
+    image: image instanceof File && image.size > 0 ? image : null,
   };
 }

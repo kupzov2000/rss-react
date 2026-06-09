@@ -19,7 +19,8 @@ export function getValidationErrors(error: unknown) {
       path === 'terms' ||
       path === 'password' ||
       path === 'confirmPassword' ||
-      path === 'country'
+      path === 'country' ||
+      path === 'image'
     ) {
       errors[path] = validationError.message;
     }

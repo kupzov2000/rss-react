@@ -2,13 +2,16 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import {
   addSubmission,
   createFormSubmissionSchema,
-  removeConfirmPassword,
+  createSubmissionValues,
 } from '@/entities/form-submission';
-import { useState, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { getUncontrolledFormValues } from '../model/get-uncontrolled-form-value';
 import type { FormErrors } from '../model/types';
 import { getValidationErrors } from '../model/get-validation-errors';
 import styles from '@/shared/ui/form/Form.module.css';
+import { convertImageToBase64 } from '@/shared/lib/image/image';
+import { ValidationError } from 'yup';
+import { PasswordStrengthIndicator } from '@/shared/ui/password-strength';
 
 interface Props {
   onSuccess: () => void;
@@ -19,10 +22,21 @@ export function UncontrolledForm({ onSuccess }: Props) {
   const countries = useAppSelector((state) => state.country.countries);
   const [errors, setErrors] = useState<FormErrors>({});
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const [password, setPassword] = useState('');
+  const [isPasswordTouched, setIsPasswordTouched] = useState(false);
+
+  const shouldShowPasswordHint = isPasswordTouched && password.length > 0;
+
+  function handlePasswordChange(event: ChangeEvent<HTMLInputElement>) {
+    setPassword(event.currentTarget.value);
+    setIsPasswordTouched(true);
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const values = getUncontrolledFormValues(formData);
     const schema = createFormSubmissionSchema(countries);
 
@@ -31,21 +45,39 @@ export function UncontrolledForm({ onSuccess }: Props) {
         abortEarly: false,
       });
 
-      const submissionValues = removeConfirmPassword(validatedValues);
+      if (!validatedValues.image) {
+        return;
+      }
+
+      const imageBase64 = await convertImageToBase64(validatedValues.image);
+      const submissionValues = createSubmissionValues(
+        validatedValues,
+        imageBase64
+      );
 
       dispatch(
         addSubmission({
           id: crypto.randomUUID(),
           formType: 'uncontrolled',
+          createdAt: Date.now(),
           ...submissionValues,
         })
       );
 
       setErrors({});
-      event.currentTarget.reset();
+      setPassword('');
+      setIsPasswordTouched(false);
+      form.reset();
       onSuccess();
     } catch (error) {
-      setErrors(getValidationErrors(error));
+      if (error instanceof ValidationError) {
+        setErrors(getValidationErrors(error));
+        return;
+      }
+
+      setErrors({
+        image: 'Image could not be read',
+      });
     }
   }
 
@@ -143,6 +175,11 @@ export function UncontrolledForm({ onSuccess }: Props) {
           id="uncontrolled-password"
           type="password"
           name="password"
+          onChange={handlePasswordChange}
+        />
+        <PasswordStrengthIndicator
+          password={password}
+          shouldShow={shouldShowPasswordHint}
         />
         <p className={styles.error}>{errors.password}</p>
       </div>
@@ -179,6 +216,22 @@ export function UncontrolledForm({ onSuccess }: Props) {
         </datalist>
 
         <p className={styles.error}>{errors.country}</p>
+      </div>
+
+      <div className={styles.field}>
+        <label className={styles.label} htmlFor="uncontrolled-image">
+          Profile image
+        </label>
+
+        <input
+          className={styles.input}
+          id="uncontrolled-image"
+          type="file"
+          name="image"
+          accept="image/png,image/jpeg"
+        />
+
+        <p className={styles.error}>{errors.image}</p>
       </div>
 
       <button className={styles.submitButton} type="submit">
