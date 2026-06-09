@@ -1,0 +1,57 @@
+.section {
+  margin-top: 32px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.card {
+  padding: 16px;
+  border: 2px solid #dddddd;
+  border-radius: 12px;
+  background-color: #ffffff;
+  transition:
+      border-color 300ms ease,
+      background-color 300ms ease;
+}
+
+.card h3 {
+  margin: 0 0 16px;
+}
+
+.highlightedCard {
+  border-color: #4f46e5;
+  background-color: #eef2ff;
+}
+
+.image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.details {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.details div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px;
+}
+
+.details dt {
+  font-weight: 700;
+}
+
+.details dd {
+  margin: 0;
+}
