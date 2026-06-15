@@ -1,3 +1,4 @@
+import { memo, useCallback, type ChangeEvent } from 'react';
 import styles from './search-bar.module.css';
 
 type SearchBarProps = {
@@ -5,7 +6,14 @@ type SearchBarProps = {
   onChange: (value: string) => void;
 };
 
-export const SearchBar = ({ value, onChange }: SearchBarProps) => {
+export const SearchBar = memo(function SearchBar({ value, onChange }: SearchBarProps) {
+  const handleChangeInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      onChange(e.target.value);
+    },
+    [onChange]
+  );
+
   return (
     <div className={styles.container}>
       <label htmlFor="search" className={styles.label}>
@@ -15,10 +23,10 @@ export const SearchBar = ({ value, onChange }: SearchBarProps) => {
         id="search"
         type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleChangeInput}
         placeholder="Type to search..."
         className={styles.input}
       />
     </div>
   );
-};
+});
