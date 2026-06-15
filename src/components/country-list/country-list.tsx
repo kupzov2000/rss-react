@@ -1,5 +1,6 @@
 import type { Country } from '../../types';
 import { CountryCard } from '../country-card/country-card';
+import { List, type RowComponentProps } from 'react-window';
 
 import styles from './country-list.module.css';
 import { memo, useMemo } from 'react';
@@ -14,6 +15,41 @@ type CountryListProps = {
   sortOrder: 'asc' | 'desc';
   onYearChange: (year: number) => void;
 };
+
+type CountryRowCustomProps = {
+  countries: Country[];
+  selectedColumns: string[];
+  selectedYear: number;
+};
+
+const LIST_HEIGHT = 700;
+const COUNTRY_ROW_HEIGHT = 340;
+const OVERSCAN_COUNT = 5;
+
+function CountryRow({
+  ariaAttributes,
+  countries,
+  index,
+  selectedColumns,
+  selectedYear,
+  style,
+}: RowComponentProps<CountryRowCustomProps>) {
+  const country = countries[index];
+
+  if (!country) {
+    return null;
+  }
+
+  return (
+    <div {...ariaAttributes} className={styles.countryRow} style={style}>
+      <CountryCard
+        country={country}
+        selectedYear={selectedYear}
+        selectedColumns={selectedColumns}
+      />
+    </div>
+  );
+}
 
 export const CountryList = memo(function CountryList({
   countries,
@@ -42,16 +78,27 @@ export const CountryList = memo(function CountryList({
         return sortOrder === 'asc' ? popA - popB : popB - popA;
       });
   }, [countries, searchQuery, selectedRegion, selectedYear, sortField, sortOrder]);
+
+  const rowProps = useMemo(
+    () => ({
+      countries: filteredCountries,
+      selectedColumns,
+      selectedYear,
+    }),
+    [filteredCountries, selectedColumns, selectedYear]
+  );
+
   return (
     <div className={styles.countryList}>
-      {filteredCountries.map((country) => (
-        <CountryCard
-          key={country.id}
-          country={country}
-          selectedYear={selectedYear}
-          selectedColumns={selectedColumns}
-        />
-      ))}
+      <List
+        className={styles.virtualList}
+        rowComponent={CountryRow}
+        rowCount={filteredCountries.length}
+        rowHeight={COUNTRY_ROW_HEIGHT}
+        rowProps={rowProps}
+        overscanCount={OVERSCAN_COUNT}
+        style={{ height: LIST_HEIGHT }}
+      />
     </div>
   );
 });
