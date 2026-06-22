@@ -1,32 +1,38 @@
+'use client';
+
 import { useGetCharacterByIdQuery } from '@/entities/character';
+import { useUrlSearchParameters } from '@/shared/lib/router/use-url-search-parameters';
 import { LoadingSpinner } from '@/shared/ui/spinner';
+import { useRouter } from 'next/navigation';
 import { type ReactNode } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+
 import './CharacterDetails.css';
 import { CharacterDetailsCard } from './CharacterDetailsCard';
 
-export function CharacterDetails() {
-  const { id } = useParams();
-  const [searchParameters] = useSearchParams();
-  const navigate = useNavigate();
+interface CharacterDetailsProps {
+  id: string;
+}
 
-  const page = searchParameters.get('page') || '1';
+export function CharacterDetails({ id }: CharacterDetailsProps) {
+  const router = useRouter();
+  const { page } = useUrlSearchParameters();
+
   const {
     data: character,
     isLoading,
     isFetching,
     isError,
-  } = useGetCharacterByIdQuery(id ?? '', {
+  } = useGetCharacterByIdQuery(id, {
     skip: !id,
   });
 
   const isPending = isLoading || isFetching;
 
   function handleClose() {
-    navigate(`/?page=${page}`);
+    router.push(`/?page=${page}`);
   }
 
-  let content: ReactNode;
+  let content: ReactNode = null;
 
   if (!id) {
     content = <p>Character id is missing</p>;
@@ -45,6 +51,7 @@ export function CharacterDetails() {
       <button className="button" onClick={handleClose}>
         Close
       </button>
+
       {content}
     </div>
   );

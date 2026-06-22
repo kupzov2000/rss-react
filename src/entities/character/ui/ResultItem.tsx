@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
 import type { ViewModelCard } from '../lib/types';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -36,7 +38,7 @@ export default function ResultItem({ card, page }: ResultItemProps) {
         className="item__select-input"
         type="checkbox"
       />
-      <Link className="result__link" to={`details/${card.id}?page=${page}`}>
+      <Link className="result__link" href={`/details/${card.id}?page=${page}`}>
         <img className="item__img" src={card.image} alt={card.name} />
         <div className="item__content">
           <span className="item__name">Full name: {card.name}</span>

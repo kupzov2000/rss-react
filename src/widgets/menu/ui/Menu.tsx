@@ -1,12 +1,23 @@
-import { NavLink, Outlet } from 'react-router-dom';
-import './Menu.css';
+'use client';
+
+import Link from 'next/link';
+
 import { crash, ErrorViewButton } from '@/features/error-view-toggle';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { ThemeToggleButton } from '@/features/theme-toggle';
 import { RefreshCacheButton } from '@/features/refresh-cache';
+import { ReactNode } from 'react';
 
-export function Menu() {
+import './Menu.css';
+import { usePathname } from 'next/navigation';
+
+interface MenuProps {
+  children: ReactNode;
+}
+
+export function Menu({ children }: MenuProps) {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
 
   const shouldCrash = useAppSelector((state) => state.errorView.shouldCrash);
 
@@ -18,21 +29,25 @@ export function Menu() {
     dispatch(crash());
   }
 
+  const homeClassName = pathname === '/' ? 'button active' : 'button';
+  const aboutClassName = pathname === '/about' ? 'button active' : 'button';
+
   return (
     <div className="layout">
       <header className="layout__header">
         <nav className="nav-menu">
-          <NavLink to="/" className="button">
+          <Link href="/" className={homeClassName}>
             Home
-          </NavLink>
+          </Link>
 
-          <NavLink to="about" className="button">
+          <Link href="/about" className={aboutClassName}>
             About
-          </NavLink>
+          </Link>
         </nav>
 
         <div className="button-actions">
           <ThemeToggleButton />
+
           <RefreshCacheButton
             tags={[
               {
@@ -47,9 +62,7 @@ export function Menu() {
         </div>
       </header>
 
-      <main className="layout__main">
-        <Outlet />
-      </main>
+      <main className="layout__main">{children}</main>
     </div>
   );
 }

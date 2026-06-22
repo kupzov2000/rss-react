@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState, type ReactNode } from 'react';
 import { ThemeContext, type Theme } from './ThemeContext';
 
@@ -8,6 +10,10 @@ interface ThemeProviderProps {
 }
 
 function getInitialTheme(): Theme {
+  if (globalThis.window === undefined) {
+    return 'light';
+  }
+
   const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 
   if (savedTheme === 'light' || savedTheme === 'dark') {

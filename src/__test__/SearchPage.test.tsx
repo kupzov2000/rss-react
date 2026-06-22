@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { beforeEach, afterEach, vi, describe, test, expect } from 'vitest';
 import { SearchPage } from '@/pages/search-page';
 import mockCharacter from './MockCharacter';
-import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 import { store } from '@/app/store/store';
 import { charactersApi } from '@/entities/character';
+import { renderWithRouter } from '@/shared/lib/test/render-search-page';
 
 const character = mockCharacter({
   id: 1,
@@ -44,7 +44,7 @@ function mockServerErrorResponse() {
 }
 
 function renderPage() {
-  renderWidthRouter(<SearchPage />);
+  renderWithRouter(<SearchPage />);
 }
 
 describe('SearchPage - success', () => {

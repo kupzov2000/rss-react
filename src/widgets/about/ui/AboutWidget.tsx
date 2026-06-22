@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
 import './AboutWidget.css';
 
 export function AboutWidget() {
@@ -10,8 +11,10 @@ export function AboutWidget() {
           Learned a lot during the RS School course.
         </span>
         <Link
-          to="https://rs.school/courses/reactjs"
+          href="https://rs.school/courses/reactjs"
           className="about__link-school"
+          target="_blank"
+          rel="noreferrer"
         >
           RSS React
         </Link>

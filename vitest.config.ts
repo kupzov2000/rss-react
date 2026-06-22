@@ -7,7 +7,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   test: {
     environment: 'jsdom',
-    setupFiles: './src/__test__/setup.ts',
+    setupFiles: './src/shared/lib/test/setup.ts',
 
     coverage: {
       provider: 'v8',

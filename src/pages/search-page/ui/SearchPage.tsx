@@ -1,26 +1,30 @@
+'use client';
+
 import { setQuery, setValue } from '@/features/search-character';
 import { SearchBar, SearchContent } from '@/features/search-character/ui';
 import { PaginationMenu } from '@/widgets/pagination-menu';
-import { useEffect, type ChangeEvent } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { useEffect, type ChangeEvent, type ReactNode } from 'react';
 import './SearchPage.css';
 import { useLocalStorage } from '@/shared/lib/storage';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { SelectedCharacters } from '@/widgets/selected-characters';
 import { useGetCharactersQuery } from '@/entities/character';
+import { useUrlSearchParameters } from '@/shared/lib/router/use-url-search-parameters';
 
-export default function SearchPage() {
+interface SearchPageProps {
+  children?: ReactNode;
+}
+
+export default function SearchPage({ children }: SearchPageProps) {
   const dispatch = useAppDispatch();
 
   const results = useAppSelector((state) => state.selectCharacter.results);
-
   const value = useAppSelector((state) => state.searchCharacter.value);
   const query = useAppSelector((state) => state.searchCharacter.query);
 
   const [savedSearch, setSavedSearch] = useLocalStorage('search_data', '');
-  const [searchParameters, setSearchParameters] = useSearchParams();
-
-  const page = Number(searchParameters.get('page')) || 1;
+  const { page, hasPageParameter, setParameter, replaceParameter } =
+    useUrlSearchParameters();
 
   const { data, isLoading, isFetching, isError } = useGetCharactersQuery({
     name: query,
@@ -40,14 +44,10 @@ export default function SearchPage() {
       : null;
 
   useEffect(() => {
-    if (!searchParameters.get('page')) {
-      const newParameters = new URLSearchParams(searchParameters);
-
-      newParameters.set('page', '1');
-
-      setSearchParameters(newParameters);
+    if (!hasPageParameter) {
+      replaceParameter('page', '1');
     }
-  }, [searchParameters, setSearchParameters]);
+  }, [hasPageParameter, replaceParameter]);
 
   useEffect(() => {
     dispatch(setValue(savedSearch));
@@ -71,7 +71,8 @@ export default function SearchPage() {
     dispatch(setQuery(trimmed));
 
     setSavedSearch(trimmed);
-    setSearchParameters({ page: '1' });
+
+    setParameter('page', '1');
   }
 
   return (
@@ -88,9 +89,10 @@ export default function SearchPage() {
         <div className="main__left">
           <PaginationMenu pages={pages} />
           <SearchContent loading={loading} error={error} items={items} />
-          {results.length > 0 ? <SelectedCharacters /> : ''}
+          {results.length > 0 ? <SelectedCharacters /> : null}
         </div>
-        <Outlet />
+
+        {children}
       </main>
     </div>
   );

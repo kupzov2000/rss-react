@@ -1,17 +1,16 @@
+import { nextNavigationMock } from '@/shared/lib/test/next-navigation-mock';
 import { PaginationMenu } from '@/widgets/pagination-menu/ui/PaginationMenu';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 function renderWithRouter(initialPage = '1') {
-  return render(
-    <MemoryRouter initialEntries={[`/?page=${initialPage}`]}>
-      <Routes>
-        <Route path="/" element={<PaginationMenu pages={5} />} />
-      </Routes>
-    </MemoryRouter>
-  );
+  nextNavigationMock.pathname = '/';
+  nextNavigationMock.search = `page=${initialPage}`;
+  nextNavigationMock.push.mockClear();
+  nextNavigationMock.replace.mockClear();
+
+  return render(<PaginationMenu pages={5} />);
 }
 
 describe('PaginationMenu', () => {
@@ -26,11 +25,9 @@ describe('PaginationMenu', () => {
 
     renderWithRouter('1');
 
-    const nextButton = screen.getByText('Next');
+    await user.click(screen.getByText('Next'));
 
-    await user.click(nextButton);
-
-    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(nextNavigationMock.push).toHaveBeenCalledWith('/?page=2');
   });
 
   it('goes to previous page when Prev clicked', async () => {
@@ -38,11 +35,9 @@ describe('PaginationMenu', () => {
 
     renderWithRouter('3');
 
-    const previousButton = screen.getByText('Prev');
+    await user.click(screen.getByText('Prev'));
 
-    await user.click(previousButton);
-
-    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(nextNavigationMock.push).toHaveBeenCalledWith('/?page=2');
   });
 
   it('does not go below page 1', async () => {
@@ -50,11 +45,9 @@ describe('PaginationMenu', () => {
 
     renderWithRouter('1');
 
-    const previousButton = screen.getByText('Prev');
+    await user.click(screen.getByText('Prev'));
 
-    await user.click(previousButton);
-
-    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(nextNavigationMock.push).not.toHaveBeenCalled();
   });
 
   it('does not go above max pages', async () => {
@@ -62,10 +55,8 @@ describe('PaginationMenu', () => {
 
     renderWithRouter('5');
 
-    const nextButton = screen.getByText('Next');
+    await user.click(screen.getByText('Next'));
 
-    await user.click(nextButton);
-
-    expect(screen.getByText('5')).toBeInTheDocument();
+    expect(nextNavigationMock.push).not.toHaveBeenCalled();
   });
 });
