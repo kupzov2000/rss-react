@@ -1,15 +1,15 @@
 'use client';
 
-import Link from 'next/link';
-
 import { crash, ErrorViewButton } from '@/features/error-view-toggle';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/application/store/hooks';
 import { ThemeToggleButton } from '@/features/theme-toggle';
 import { RefreshCacheButton } from '@/features/refresh-cache';
 import { ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
+import { Link, usePathname } from '@/i18n/navigation';
 
 import './Menu.css';
-import { usePathname } from 'next/navigation';
+import { LanguageSwitcher } from '@/features/language-switcher';
 
 interface MenuProps {
   children: ReactNode;
@@ -18,6 +18,7 @@ interface MenuProps {
 export function Menu({ children }: MenuProps) {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
+  const t = useTranslations('Menu');
 
   const shouldCrash = useAppSelector((state) => state.errorView.shouldCrash);
 
@@ -37,16 +38,17 @@ export function Menu({ children }: MenuProps) {
       <header className="layout__header">
         <nav className="nav-menu">
           <Link href="/" className={homeClassName}>
-            Home
+            {t('home')}
           </Link>
 
           <Link href="/about" className={aboutClassName}>
-            About
+            {t('about')}
           </Link>
         </nav>
 
         <div className="button-actions">
           <ThemeToggleButton />
+          <LanguageSwitcher />
 
           <RefreshCacheButton
             tags={[
@@ -56,9 +58,11 @@ export function Menu({ children }: MenuProps) {
               },
             ]}
           >
-            <span>Refresh Characters</span>
+            <span>{t('refreshCharacters')}</span>
           </RefreshCacheButton>
-          <ErrorViewButton onClick={handleErrorView} />
+          <ErrorViewButton onClick={handleErrorView}>
+            {t('error')}
+          </ErrorViewButton>
         </div>
       </header>
 

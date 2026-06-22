@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SearchPage } from '@/pages/search-page';
+import { SearchPage } from '@/views/search-page';
 import { renderWithRouter } from '@/shared/lib/test/render-search-page';
 
 function mockEmptyCharactersResponse() {

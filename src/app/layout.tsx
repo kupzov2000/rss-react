@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-import { Menu } from '@/widgets/menu';
+import { Providers } from '@/application/providers';
 
 import '../index.css';
-import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: 'nextjs-ssr',
@@ -18,9 +17,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <Menu>{children}</Menu>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

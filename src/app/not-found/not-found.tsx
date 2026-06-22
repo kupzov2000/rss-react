@@ -1,4 +1,4 @@
-import { NotFoundPage } from '@/pages/not-found';
+import { NotFoundPage } from '@/views/not-found';
 
 export default function NouFound() {
   return <NotFoundPage />;

@@ -1,0 +1,45 @@
+{
+  "Menu": {
+    "home": "Главная",
+    "about": "О нас",
+    "refreshCharacters": "Обновить персонажей",
+    "error": "Ошибка"
+  },
+  "SearchPage": {
+    "placeholder": "Поиск по имени...",
+    "search": "Найти",
+    "serverError": "Что-то пошло не так. Попробуй позже.",
+    "notFound": "Персонаж с таким именем не найден"
+  },
+  "CharacterDetails": {
+    "close": "Закрыть",
+    "missingId": "ID персонажа отсутствует",
+    "serverError": "Что-то пошло не так. Попробуй позже.",
+    "notFound": "Персонаж не найден",
+    "fullName": "Полное имя",
+    "gender": "Пол",
+    "status": "Статус"
+  },
+  "SelectedCharacters": {
+    "itemSelected": "Выбран 1 элемент",
+    "itemsSelected": "Выбрано элементов",
+    "clear": "Очистить",
+    "download": "Скачать"
+  },
+  "About": {
+    "description": "Привет, меня зовут Евгений. Я успешно завершил основной курс и многому научился во время курса RS School."
+  },
+  "ErrorBoundary": {
+    "title": "Что-то пошло не так, кнопка ниже должна помочь",
+    "refresh": "Обновить"
+  },
+  "LanguageSwitcher": {
+    "label": "Язык",
+    "english": "Английский",
+    "russian": "Русский"
+  },
+  "ThemeToggle": {
+    "toDark": "Тёмная тема",
+    "toLight": "Светлая тема"
+  }
+}

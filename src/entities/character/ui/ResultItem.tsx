@@ -1,20 +1,28 @@
 'use client';
 
-import Link from 'next/link';
-import type { ViewModelCard } from '../lib/types';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/application/store/hooks';
 import {
   addSelectCharacter,
   removeSelectCharacter,
 } from '@/features/select-character';
+import { Link } from '@/i18n/navigation';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import type { ViewModelCard } from '../lib/types';
 
 type ResultItemProps = {
   card: ViewModelCard;
   page: string;
+  eager?: boolean;
 };
 
-export default function ResultItem({ card, page }: ResultItemProps) {
+export default function ResultItem({
+  card,
+  page,
+  eager = false,
+}: ResultItemProps) {
   const dispatch = useAppDispatch();
+  const t = useTranslations('CharacterDetails');
 
   const checked = useAppSelector((state) => {
     return state.selectCharacter.results.some(
@@ -39,11 +47,25 @@ export default function ResultItem({ card, page }: ResultItemProps) {
         type="checkbox"
       />
       <Link className="result__link" href={`/details/${card.id}?page=${page}`}>
-        <img className="item__img" src={card.image} alt={card.name} />
+        <Image
+          className="item__img"
+          src={card.image}
+          alt={card.name}
+          width={300}
+          height={300}
+          loading={eager ? 'eager' : 'lazy'}
+          unoptimized
+        />
         <div className="item__content">
-          <span className="item__name">Full name: {card.name}</span>
-          <span className="item__gender">Gender: {card.gender}</span>
-          <span className="item__status">Status: {card.status}</span>
+          <span className="item__name">
+            {t('fullName')}: {card.name}
+          </span>
+          <span className="item__gender">
+            {t('gender')}: {card.gender}
+          </span>
+          <span className="item__status">
+            {t('status')}: {card.status}
+          </span>
         </div>
       </Link>
     </li>

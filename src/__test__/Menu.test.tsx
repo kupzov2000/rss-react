@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { ErrorBoundary } from '@/app/providers/error-boundary';
+import { ErrorBoundary } from '@/application/providers/error-boundary';
 import { renderWithProviders } from '@/shared/lib/test/render-with-providers';
 import { Menu } from '@/widgets/menu/ui/Menu';
 

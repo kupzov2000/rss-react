@@ -1,12 +1,14 @@
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/application/store/hooks';
 import {
   clearAllCharacters,
   downloadSelectedCharactersCsv,
 } from '@/features/select-character';
+import { useTranslations } from 'next-intl';
 import './SelectedCharacters.css';
 
 export function SelectedCharacters() {
   const dispatch = useAppDispatch();
+  const t = useTranslations('SelectedCharacters');
 
   const results = useAppSelector((state) => state.selectCharacter.results);
   const selectedCount = results.length;
@@ -25,7 +27,7 @@ export function SelectedCharacters() {
         <div className="selected-characters__info">
           <div className="selected-characters__count">{selectedCount}</div>
           <span className="selected-characters__text">
-            {selectedCount === 1 ? 'Item selected' : 'Items selected'}
+            {selectedCount === 1 ? t('itemSelected') : t('itemsSelected')}
           </span>
         </div>
 
@@ -35,14 +37,14 @@ export function SelectedCharacters() {
             type="button"
             onClick={handleClearClick}
           >
-            Clear
+            {t('clear')}
           </button>
           <button
             className="button selected-characters__button selected-characters__button_download"
             type="button"
             onClick={handleDownloadClick}
           >
-            Download
+            {t('download')}
           </button>
         </div>
       </div>

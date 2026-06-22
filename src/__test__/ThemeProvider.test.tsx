@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ThemeContext } from '@/app/providers/theme/ThemeContext';
-import { ThemeProvider } from '@/app/providers/theme/ThemeProvider';
+import { ThemeContext } from '@/application/providers/theme/ThemeContext';
+import { ThemeProvider } from '@/application/providers/theme/ThemeProvider';
 
 function ThemeConsumer() {
   const { theme, toggleTheme } = useContext(ThemeContext);

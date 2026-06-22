@@ -20,7 +20,10 @@ describe('testing result item', () => {
     expect(screen.getByText(/gender: male/i)).toBeInTheDocument();
     expect(screen.getByText(/status: alive/i)).toBeInTheDocument();
 
-    expect(screen.getByRole('img')).toHaveAttribute('src', mockData.image);
+    expect(screen.getByRole('img', { name: mockData.name })).toHaveAttribute(
+      'src',
+      mockData.image
+    );
   });
 });
 
