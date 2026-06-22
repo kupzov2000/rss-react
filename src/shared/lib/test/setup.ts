@@ -48,6 +48,11 @@ const messages: Record<string, Record<string, string>> = {
     toDark: 'Dark theme',
     toLight: 'Light theme',
   },
+  NotFoundPage: {
+    title: 'Page is not found',
+    description: 'The page you are looking for does not exist or has been moved.',
+    home: 'Go to Home',
+  },
 };
 
 vi.mock('next/navigation', () => {

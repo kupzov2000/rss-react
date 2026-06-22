@@ -1,13 +1,18 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 import './NotFoundPage.css';
 
 export function NotFoundPage() {
+  const t = useTranslations('NotFoundPage');
+
   return (
     <div className="not-found-page">
-      <h1 className="not-found-page__title">Page is not found</h1>
+      <p className="not-found-page__code">404</p>
+      <h1 className="not-found-page__title">{t('title')}</h1>
+      <p className="not-found-page__description">{t('description')}</p>
       <Link href="/" className="button">
-        Go to Home
+        {t('home')}
       </Link>
     </div>
   );
