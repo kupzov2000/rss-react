@@ -1,3 +1,5 @@
+'use client';
+
 import { useAppDispatch, useAppSelector } from '@/application/store/hooks';
 import {
   clearAllCharacters,
@@ -17,8 +19,8 @@ export function SelectedCharacters() {
     dispatch(clearAllCharacters());
   }
 
-  function handleDownloadClick() {
-    downloadSelectedCharactersCsv(results);
+  async function handleDownloadClick() {
+    await downloadSelectedCharactersCsv(results);
   }
 
   return (

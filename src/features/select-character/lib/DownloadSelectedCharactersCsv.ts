@@ -1,52 +1,28 @@
 import type { ViewModelCard } from '@/entities/character/lib/types';
 
-export function escapeCsvValue(value: string | number) {
-  const stringValue = String(value);
-
-  if (
-    stringValue.includes(',') ||
-    stringValue.includes('"') ||
-    stringValue.includes('\n')
-  ) {
-    return `"${stringValue.replaceAll('"', '""')}"`;
-  }
-
-  return stringValue;
-}
-
-function createCsvContent(characters: ViewModelCard[]) {
-  const headers = ['id', 'name', 'gender', 'status', 'image', 'detailsUrl'];
-
-  const rows = characters.map((character) => {
-    const detailsUrl = `${globalThis.location.origin}/details/${character.id}`;
-
-    return [
-      character.id,
-      character.name,
-      character.gender,
-      character.status,
-      character.image,
-      detailsUrl,
-    ].map(escapeCsvValue);
-  });
-
-  return [headers, ...rows].map((row) => row.join(',')).join('\n');
-}
-
-export function downloadSelectedCharactersCsv(characters: ViewModelCard[]) {
+export async function downloadSelectedCharactersCsv(
+  characters: ViewModelCard[]
+) {
   if (characters.length === 0) {
     return;
   }
 
-  const csvContent = createCsvContent(characters);
-  const blob = new Blob([csvContent], {
-    type: 'text/csv;charset=utf-8',
+  const response = await fetch('/api/selected-characters/csv', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(characters),
   });
 
+  if (!response.ok) {
+    throw new Error('Failed to generate CSV file');
+  }
+
+  const blob = await response.blob();
   const url = URL.createObjectURL(blob);
 
   const link = document.createElement('a');
-
   link.href = url;
   link.download = `${characters.length}_items.csv`;
 

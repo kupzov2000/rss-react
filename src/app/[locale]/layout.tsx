@@ -6,6 +6,7 @@ import { Menu } from '@/widgets/menu';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -23,6 +24,8 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+
+  setRequestLocale(locale);
 
   return (
     <NextIntlClientProvider>

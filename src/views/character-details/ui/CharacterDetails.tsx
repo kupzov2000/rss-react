@@ -17,6 +17,7 @@ interface CharacterDetailsProps {
 export function CharacterDetails({ id }: CharacterDetailsProps) {
   const router = useRouter();
   const { page } = useUrlSearchParameters();
+
   const t = useTranslations('CharacterDetails');
 
   const {
@@ -58,3 +59,4 @@ export function CharacterDetails({ id }: CharacterDetailsProps) {
     </div>
   );
 }
+    

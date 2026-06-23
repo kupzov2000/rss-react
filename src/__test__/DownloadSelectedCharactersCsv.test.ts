@@ -1,7 +1,4 @@
-import {
-  downloadSelectedCharactersCsv,
-  escapeCsvValue,
-} from '@/features/select-character';
+import { downloadSelectedCharactersCsv } from '@/features/select-character';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const characters = [
@@ -26,14 +23,15 @@ describe('downloadSelectedCharactersCsv', () => {
     vi.restoreAllMocks();
   });
 
-  it('escapes csv values', () => {
-    expect(escapeCsvValue('Rick')).toBe('Rick');
-    expect(escapeCsvValue('Morty, Smith')).toBe('"Morty, Smith"');
-    expect(escapeCsvValue('Rick "Prime"')).toBe('"Rick ""Prime"""');
-    expect(escapeCsvValue('Line\nBreak')).toBe('"Line\nBreak"');
-  });
+  it('requests csv from api and downloads returned file', async () => {
+    const response = new Response('id,name\n1,Rick', {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv',
+      },
+    });
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(response);
 
-  it('downloads selected characters as csv file', () => {
     const createObjectUrlMock = vi
       .spyOn(URL, 'createObjectURL')
       .mockReturnValue('blob:test-url');
@@ -46,7 +44,36 @@ describe('downloadSelectedCharactersCsv', () => {
       .spyOn(HTMLAnchorElement.prototype, 'click')
       .mockImplementation(() => {});
 
+    await downloadSelectedCharactersCsv(characters);
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/selected-characters/csv', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(characters),
+    });
+
+    expect(createObjectUrlMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        size: 14,
+        type: 'text/csv',
+      })
+    );
+    expect(clickMock).toHaveBeenCalled();
+    expect(revokeObjectUrlMock).toHaveBeenCalledWith('blob:test-url');
+  });
+
+  it('uses selected characters count as downloaded file name', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response('id,name\n1,Rick', { status: 200 })
+    );
+
     let appendedLink: HTMLAnchorElement | undefined;
+
+    vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:test-url');
+    vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
 
     vi.spyOn(document.body, 'append').mockImplementation((...nodes) => {
       for (const node of nodes) {
@@ -56,11 +83,7 @@ describe('downloadSelectedCharactersCsv', () => {
       }
     });
 
-    downloadSelectedCharactersCsv(characters);
-
-    expect(createObjectUrlMock).toHaveBeenCalled();
-    expect(clickMock).toHaveBeenCalled();
-    expect(revokeObjectUrlMock).toHaveBeenCalledWith('blob:test-url');
+    await downloadSelectedCharactersCsv(characters);
 
     expect(appendedLink).toBeDefined();
 

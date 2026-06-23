@@ -4,7 +4,7 @@ import { crash, ErrorViewButton } from '@/features/error-view-toggle';
 import { useAppDispatch, useAppSelector } from '@/application/store/hooks';
 import { ThemeToggleButton } from '@/features/theme-toggle';
 import { RefreshCacheButton } from '@/features/refresh-cache';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 
@@ -30,7 +30,9 @@ export function Menu({ children }: MenuProps) {
     dispatch(crash());
   }
 
-  const homeClassName = pathname === '/' ? 'button active' : 'button';
+  const isHomeActive = pathname === '/' || pathname.startsWith('/details/');
+
+  const homeClassName = isHomeActive ? 'button active' : 'button';
   const aboutClassName = pathname === '/about' ? 'button active' : 'button';
 
   return (
@@ -48,7 +50,10 @@ export function Menu({ children }: MenuProps) {
 
         <div className="button-actions">
           <ThemeToggleButton />
-          <LanguageSwitcher />
+
+          <Suspense fallback={null}>
+            <LanguageSwitcher />
+          </Suspense>
 
           <RefreshCacheButton
             tags={[

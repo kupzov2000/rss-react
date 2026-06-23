@@ -1,3 +1,5 @@
+'use client';
+
 import { useAppDispatch } from '@/application/store/hooks';
 import { charactersApi } from '@/entities/character';
 import './RefreshCacheButton.css';

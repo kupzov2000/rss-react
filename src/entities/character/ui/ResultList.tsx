@@ -5,6 +5,7 @@ import './ResultList.css';
 import ResultItem from './ResultItem';
 import { useUrlSearchParameters } from '@/shared/lib/router/use-url-search-parameters';
 
+
 const EAGER_IMAGE_COUNT = 4;
 
 type Props = {
