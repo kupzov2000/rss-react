@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
 import { useCo2Data } from '../../hooks/useCo2Data';
 import { LoadingSpinner } from '../loading-spinner/loading-spinner';
 import { SearchBar } from '../search-bar/search-bar';
@@ -9,63 +9,78 @@ import { getAvailableYears, getAvailableColumns } from '../../utils/data-transfo
 
 import styles from './app.module.css';
 
+type SortField = 'name' | 'population';
+type SortOrder = 'asc' | 'desc';
+
 type AppState = {
   searchQuery: string;
   selectedRegion: string;
   selectedYear: number;
-  sortField: 'name' | 'population';
-  sortOrder: 'asc' | 'desc';
+  sortField: SortField;
+  sortOrder: SortOrder;
   selectedColumns: string[];
   isColumnModalOpen: boolean;
 };
 
+const INITIAL_STATE: AppState = {
+  searchQuery: '',
+  selectedRegion: '',
+  selectedYear: 2020,
+  sortField: 'population',
+  sortOrder: 'desc',
+  selectedColumns: ['year', 'population', 'co2', 'co2_per_capita'],
+  isColumnModalOpen: false,
+};
+
+const AVAILABLE_COLUMNS = getAvailableColumns();
+
 export const App = () => {
   const { data, isLoading, error } = useCo2Data();
 
-  const [state, setState] = useState<AppState>({
-    searchQuery: '',
-    selectedRegion: '',
-    selectedYear: 2020,
-    sortField: 'population',
-    sortOrder: 'desc',
-    selectedColumns: ['year', 'population', 'co2', 'co2_per_capita'],
-    isColumnModalOpen: false,
-  });
+  const [state, setState] = useState<AppState>(INITIAL_STATE);
 
-  const years = data ? getAvailableYears(data) : [];
-  const availableColumns = getAvailableColumns();
+  const years = useMemo(() => {
+    return data ? getAvailableYears(data) : [];
+  }, [data]);
 
-  const handleSearch = (value: string) => {
-    setState({ ...state, searchQuery: value });
-  };
+  const handleSearch = useCallback((value: string) => {
+    setState((prev) => ({ ...prev, searchQuery: value }));
+  }, []);
 
-  const handleYearChange = (year: number) => {
-    setState({ ...state, selectedYear: year });
-  };
+  const handleYearChange = useCallback((year: number) => {
+    setState((prev) => ({ ...prev, selectedYear: year }));
+  }, []);
 
-  const handleSortFieldChange = (field: 'name' | 'population') => {
-    setState({ ...state, sortField: field });
-  };
+  const handleSortFieldChange = useCallback((field: SortField) => {
+    setState((prev) => ({ ...prev, sortField: field }));
+  }, []);
 
-  const handleSortOrderToggle = () => {
-    setState({
-      ...state,
-      sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc',
-    });
-  };
+  const handleSortSelectChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      handleSortFieldChange(e.target.value as SortField);
+    },
+    [handleSortFieldChange]
+  );
 
-  const handleColumnToggle = (column: string) => {
-    setState({
-      ...state,
-      selectedColumns: state.selectedColumns.includes(column)
-        ? state.selectedColumns.filter((c) => c !== column)
-        : [...state.selectedColumns, column],
-    });
-  };
+  const handleSortOrderToggle = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      sortOrder: prev.sortOrder === 'asc' ? 'desc' : 'asc',
+    }));
+  }, []);
 
-  const handleModalToggle = () => {
-    setState({ ...state, isColumnModalOpen: !state.isColumnModalOpen });
-  };
+  const handleColumnToggle = useCallback((column: string) => {
+    setState((prev) => ({
+      ...prev,
+      selectedColumns: prev.selectedColumns.includes(column)
+        ? prev.selectedColumns.filter((c) => c !== column)
+        : [...prev.selectedColumns, column],
+    }));
+  }, []);
+
+  const handleModalToggle = useCallback(() => {
+    setState((prev) => ({ ...prev, isColumnModalOpen: !prev.isColumnModalOpen }));
+  }, []);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -92,7 +107,7 @@ export const App = () => {
           <label className={styles.sortLabel}>Sort by:</label>
           <select
             value={state.sortField}
-            onChange={(e) => handleSortFieldChange(e.target.value as 'name' | 'population')}
+            onChange={handleSortSelectChange}
             className={styles.sortSelect}
           >
             <option value="population">Population</option>
@@ -126,7 +141,7 @@ export const App = () => {
       {/* Column Modal */}
       <ColumnModal
         isOpen={state.isColumnModalOpen}
-        availableColumns={availableColumns}
+        availableColumns={AVAILABLE_COLUMNS}
         selectedColumns={state.selectedColumns}
         onToggle={handleColumnToggle}
         onClose={handleModalToggle}
