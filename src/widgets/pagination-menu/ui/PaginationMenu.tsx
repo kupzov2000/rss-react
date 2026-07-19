@@ -1,4 +1,6 @@
-import { useSearchParams } from 'react-router-dom';
+'use client';
+
+import { useUrlSearchParameters } from '@/shared/lib/router/use-url-search-parameters';
 import './PaginationMenu.css';
 
 type Props = {
@@ -6,12 +8,10 @@ type Props = {
 };
 
 export function PaginationMenu({ pages }: Props) {
-  const [searchParameters, setSearchParameters] = useSearchParams();
-
-  const currentPage = Number(searchParameters.get('page')) || 1;
+  const { page: currentPage, setParameter } = useUrlSearchParameters();
 
   const goToPage = (page: number) => {
-    setSearchParameters({ page: String(page) });
+    setParameter('page', String(page));
   };
 
   const handlePrevious = () => {

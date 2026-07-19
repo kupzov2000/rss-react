@@ -1,14 +1,18 @@
+import { useTranslations } from 'next-intl';
+
 import './ErrorComponent.css';
 
 export default function ErrorComponent() {
+  const t = useTranslations('ErrorBoundary');
+
   return (
     <div className="error__wrapper">
-      <h1>Something went wrong, the button below should help</h1>
+      <h1>{t('title')}</h1>
       <button
         className="error__refresh"
         onClick={() => globalThis.location.reload()}
       >
-        Refresh
+        {t('refresh')}
       </button>
     </div>
   );

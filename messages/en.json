@@ -1,0 +1,50 @@
+{
+  "Menu": {
+    "home": "Home",
+    "about": "About",
+    "refreshCharacters": "Refresh Characters",
+    "error": "Error"
+  },
+  "SearchPage": {
+    "placeholder": "Search by name...",
+    "search": "Search",
+    "serverError": "Something went wrong. Try again later.",
+    "notFound": "Character with this name not found"
+  },
+  "CharacterDetails": {
+    "close": "Close",
+    "missingId": "Character id is missing",
+    "serverError": "Something went wrong. Try again later.",
+    "notFound": "Character not found",
+    "fullName": "Full name",
+    "gender": "Gender",
+    "status": "Status"
+  },
+  "SelectedCharacters": {
+    "itemSelected": "Item selected",
+    "itemsSelected": "Items selected",
+    "clear": "Clear",
+    "download": "Download"
+  },
+  "About": {
+    "description": "Hello my name is Evgeny. Successfully completed the main course. Learned a lot during the RS School course."
+  },
+  "ErrorBoundary": {
+    "title": "Something went wrong, the button below should help",
+    "refresh": "Refresh"
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "english": "English",
+    "russian": "Russian"
+  },
+  "ThemeToggle": {
+    "toDark": "Dark theme",
+    "toLight": "Light theme"
+  },
+  "NotFoundPage": {
+    "title": "Page is not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "home": "Go to Home"
+  }
+}

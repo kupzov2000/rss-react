@@ -1,8 +1,8 @@
 import ResultItem from '@/entities/character/ui/ResultItem';
 import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
 import userEvent from '@testing-library/user-event';
+import { renderWithRouter } from '@/shared/lib/test/render-search-page';
 
 describe('testing result item', () => {
   it('renders card information correctly', () => {
@@ -14,13 +14,16 @@ describe('testing result item', () => {
       status: 'Alive',
     };
 
-    renderWidthRouter(<ResultItem card={mockData} page="1" />);
+    renderWithRouter(<ResultItem card={mockData} page="1" />);
 
     expect(screen.getByText(/full name: rick sanchez/i)).toBeInTheDocument();
     expect(screen.getByText(/gender: male/i)).toBeInTheDocument();
     expect(screen.getByText(/status: alive/i)).toBeInTheDocument();
 
-    expect(screen.getByRole('img')).toHaveAttribute('src', mockData.image);
+    expect(screen.getByRole('img', { name: mockData.name })).toHaveAttribute(
+      'src',
+      mockData.image
+    );
   });
 });
 
@@ -36,7 +39,7 @@ describe('ResultItem selection', () => {
       status: 'Alive',
     };
 
-    renderWidthRouter(<ResultItem card={mockData} page="1" />);
+    renderWithRouter(<ResultItem card={mockData} page="1" />);
 
     const checkbox = screen.getByRole('checkbox');
 

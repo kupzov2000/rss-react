@@ -1,0 +1,105 @@
+.details-panel {
+  position: sticky;
+  top: 0;
+  width: 420px;
+  height: 100vh;
+  flex-shrink: 0;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--space-xl);
+  gap: 10px;
+    padding: 10px;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+}
+
+.details-panel .button {
+  align-self: flex-end;
+  width: 120px;
+  color: var(--accent);
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+}
+
+.details-panel .button:hover {
+  color: var(--accent-text);
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.main_detail {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main_detail__item {
+  position: relative;
+  width: 100%;
+    max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+    padding: var(--space-lg);
+    color: var(--text);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+}
+
+.details-panel .refresh-detail-button {
+  position: absolute;
+  top: calc(var(--space-lg) + 15px);
+  left: calc(var(--space-lg) + 15px);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: #ffffff;
+  background: var(--accent);
+}
+
+.details-panel .refresh-detail-button:hover {
+  background: var(--accent-hover);
+}
+.main_detail__img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+}
+
+.main_detail__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-xs);
+    text-align: left;
+}
+
+.main_detail__name {
+  color: var(--text-h);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.main_detail__gender,
+.main_detail__status {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+@media (max-width: 740px) {
+  .details-panel {
+    position: static;
+    width: 100%;
+    height: auto;
+      margin-left: 0;
+  }
+}

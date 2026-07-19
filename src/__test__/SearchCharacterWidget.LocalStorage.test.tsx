@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SearchPage } from '@/pages/search-page';
-import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
+import { SearchPage } from '@/views/search-page';
+import { renderWithRouter } from '@/shared/lib/test/render-search-page';
 
 function mockEmptyCharactersResponse() {
   return Response.json(
@@ -30,7 +30,7 @@ describe('SearchPage localStorage', () => {
   });
 
   it('shows empty input when localStorage is empty', () => {
-    renderWidthRouter(<SearchPage />);
+    renderWithRouter(<SearchPage />);
 
     const input = screen.getByRole('textbox');
 
@@ -40,7 +40,7 @@ describe('SearchPage localStorage', () => {
   it('updates localStorage after search via URL change', async () => {
     const user = userEvent.setup();
 
-    renderWidthRouter(<SearchPage />);
+    renderWithRouter(<SearchPage />);
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button', { name: /search/i });

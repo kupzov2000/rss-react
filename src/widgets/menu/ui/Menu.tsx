@@ -1,12 +1,24 @@
-import { NavLink, Outlet } from 'react-router-dom';
-import './Menu.css';
+'use client';
+
 import { crash, ErrorViewButton } from '@/features/error-view-toggle';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/application/store/hooks';
 import { ThemeToggleButton } from '@/features/theme-toggle';
 import { RefreshCacheButton } from '@/features/refresh-cache';
+import { ReactNode, Suspense } from 'react';
+import { useTranslations } from 'next-intl';
+import { Link, usePathname } from '@/i18n/navigation';
 
-export function Menu() {
+import './Menu.css';
+import { LanguageSwitcher } from '@/features/language-switcher';
+
+interface MenuProps {
+  children: ReactNode;
+}
+
+export function Menu({ children }: MenuProps) {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
+  const t = useTranslations('Menu');
 
   const shouldCrash = useAppSelector((state) => state.errorView.shouldCrash);
 
@@ -18,21 +30,31 @@ export function Menu() {
     dispatch(crash());
   }
 
+  const isHomeActive = pathname === '/' || pathname.startsWith('/details/');
+
+  const homeClassName = isHomeActive ? 'button active' : 'button';
+  const aboutClassName = pathname === '/about' ? 'button active' : 'button';
+
   return (
     <div className="layout">
       <header className="layout__header">
         <nav className="nav-menu">
-          <NavLink to="/" className="button">
-            Home
-          </NavLink>
+          <Link href="/" className={homeClassName}>
+            {t('home')}
+          </Link>
 
-          <NavLink to="about" className="button">
-            About
-          </NavLink>
+          <Link href="/about" className={aboutClassName}>
+            {t('about')}
+          </Link>
         </nav>
 
         <div className="button-actions">
           <ThemeToggleButton />
+
+          <Suspense fallback={null}>
+            <LanguageSwitcher />
+          </Suspense>
+
           <RefreshCacheButton
             tags={[
               {
@@ -41,15 +63,15 @@ export function Menu() {
               },
             ]}
           >
-            <span>Refresh Characters</span>
+            <span>{t('refreshCharacters')}</span>
           </RefreshCacheButton>
-          <ErrorViewButton onClick={handleErrorView} />
+          <ErrorViewButton onClick={handleErrorView}>
+            {t('error')}
+          </ErrorViewButton>
         </div>
       </header>
 
-      <main className="layout__main">
-        <Outlet />
-      </main>
+      <main className="layout__main">{children}</main>
     </div>
   );
 }

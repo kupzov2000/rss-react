@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ThemeProvider } from '@/app/providers/theme';
+import { ThemeProvider } from '@/application/providers/theme';
 import { ThemeToggleButton } from '@/features/theme-toggle';
 
 describe('ThemeToggleButton', () => {

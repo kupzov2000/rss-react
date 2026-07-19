@@ -1,20 +1,29 @@
+'use client';
+
 import type { ViewModelCard } from '../lib/types';
 import './ResultList.css';
 import ResultItem from './ResultItem';
-import { useSearchParams } from 'react-router-dom';
+import { useUrlSearchParameters } from '@/shared/lib/router/use-url-search-parameters';
+
+
+const EAGER_IMAGE_COUNT = 4;
 
 type Props = {
   viewModelCards: ViewModelCard[];
 };
 
 export default function ResultList({ viewModelCards }: Props) {
-  const [searchParameters] = useSearchParams();
-  const currentPage = searchParameters.get('page') || '1';
+  const { page } = useUrlSearchParameters();
 
   return (
     <ul className="result__list">
-      {viewModelCards.map((item) => (
-        <ResultItem card={item} key={item.id} page={currentPage} />
+      {viewModelCards.map((item, index) => (
+        <ResultItem
+          card={item}
+          key={item.id}
+          page={String(page)}
+          eager={index < EAGER_IMAGE_COUNT}
+        />
       ))}
     </ul>
   );

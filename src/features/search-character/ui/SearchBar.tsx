@@ -5,6 +5,7 @@ interface Props {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   placeholder: string;
+  buttonLabel?: string;
 }
 
 export default function SearchBar({
@@ -12,6 +13,7 @@ export default function SearchBar({
   onChange,
   onClick,
   placeholder,
+  buttonLabel = 'Search',
 }: Props) {
   return (
     <div className="search">
@@ -22,7 +24,7 @@ export default function SearchBar({
         placeholder={placeholder}
       />
       <button className="search__button" onClick={onClick}>
-        Search
+        {buttonLabel}
       </button>
     </div>
   );

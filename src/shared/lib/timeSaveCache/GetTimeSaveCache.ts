@@ -1,7 +1,7 @@
 const DEFAULT_CACHE_TTL_SECONDS = 600;
 
 export function getTimeSaveCache() {
-  const rawCacheTtl = import.meta.env.VITE_CACHE_TTL;
+  const rawCacheTtl = process.env.NEXT_PUBLIC_CACHE_TTL;
 
   if (!rawCacheTtl) {
     return DEFAULT_CACHE_TTL_SECONDS;

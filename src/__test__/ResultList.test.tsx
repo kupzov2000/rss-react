@@ -1,5 +1,5 @@
 import { ResultList } from '@/entities/character/ui';
-import { renderWidthRouter } from '@/shared/lib/test/render-search-page';
+import { renderWithRouter } from '@/shared/lib/test/render-search-page';
 import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
@@ -22,7 +22,7 @@ describe('ResultList', () => {
       },
     ];
 
-    renderWidthRouter(<ResultList viewModelCards={mockData} />);
+    renderWithRouter(<ResultList viewModelCards={mockData} />);
 
     const items = screen.getAllByRole('listitem');
     expect(items).toHaveLength(mockData.length);

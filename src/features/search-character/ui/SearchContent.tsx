@@ -9,6 +9,7 @@ interface Props {
 }
 
 export default function SearchContent({ loading, error, items }: Props) {
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -17,5 +18,6 @@ export default function SearchContent({ loading, error, items }: Props) {
     return <p className="error-container">{error}</p>;
   }
 
-  return <ResultList viewModelCards={items} />;
+ return <ResultList viewModelCards={items} />;
 }
+
